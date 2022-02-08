@@ -1,8 +1,12 @@
 # dependencies
 /node_modules
+/server/node_modules
 
 # production
 /build
+
+# secrets
+/server/config
 
 # misc
 .DS_Store

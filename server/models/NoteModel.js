@@ -6,7 +6,8 @@ const schema = new Schema({
   content: String,
   isPublic: {type: Boolean, default: false},
 }, {
-  timestamps: true
+  timestamps: true,
+  versionKey: false
 })
 
 module.exports = model('Note', schema)

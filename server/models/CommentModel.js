@@ -5,7 +5,8 @@ const schema = new Schema({
   noteId: {type: Schema.Types.ObjectId, ref: 'NoteModel', required: true},
   userId: {type: Schema.Types.ObjectId, ref: 'UserModel', required: true}
 }, {
-  timestamps: true
+  timestamps: true,
+  versionKey: false
 })
 
 module.exports = model('Comment', schema)

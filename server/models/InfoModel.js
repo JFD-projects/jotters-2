@@ -4,7 +4,8 @@ const schema = new Schema({
   lng: {type: String, enum: ['en', 'ru'], required: true, unique: true},
   content: String
 }, {
-  timestamps: true
+  timestamps: true,
+  versionKey: false
 })
 
 module.exports = model('InfoNote', schema)

@@ -7,7 +7,8 @@ const schema = new Schema({
   hasPublicNote: {type: Boolean, default: false},
   notesNumber: {type: Number, default: 0}
 }, {
-  timestamps: true
+  timestamps: true,
+  versionKey: false
 })
 
 module.exports = model('Jotter', schema)

@@ -2,12 +2,12 @@ const express = require('express')
 
 const router = express.Router({mergeParams: true})
 
-router.use('/auth', require('./auth.routes'))
-router.use('/comment', require('./comment.routes'))
-router.use('/jotter', require('./jotter.routes'))
-router.use('/note', require('./note.routes'))
-router.use('/info', require('./info.routes'))
-router.use('/publicNote', require('./publicNote.routes'))
-router.use('/user', require('./user.routes'))
+router.use('/auth', require('./authRoutes'))
+router.use('/comment', require('./commentRoutes'))
+router.use('/jotter', require('./jotterRoutes'))
+router.use('/note', require('./noteRoutes'))
+router.use('/info', require('./infoRoutes'))
+router.use('/publicNote', require('./publicNoteRoutes'))
+router.use('/user', require('./userRoutes'))
 
 module.exports = router

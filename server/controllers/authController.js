@@ -1,15 +1,12 @@
-const express = require('express')
 const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 
 const {generateUserData} = require('../utils/helper')
 const UserModel = require('../models/UserModel')
-const tokenService = require('../services/token.service')
-const errorService = require('../services/error.service')
+const tokenService = require('../services/tokenService')
+const errorService = require('../services/errorService')
 
-const router = express.Router({mergeParams: true})
-
-router.post('/register', [
+exports.register = [
   check('email', 'INVALID_EMAIL').isEmail(),
   check('password', 'PASSWORD_MIN_LENGTH_8').isLength({min: 8}),
 
@@ -44,9 +41,9 @@ router.post('/register', [
       errorService.handleError(res, 500, 'SERVER_ERROR')
     }
   }
-])
+]
 
-router.post('/login', [
+exports.login = [
   check('email', 'INVALID_EMAIL').normalizeEmail().isEmail(),
   check('password', 'EMPTY_PASSWORD').exists(),
 
@@ -59,7 +56,7 @@ router.post('/login', [
 
       const {email, password} = req.body
 
-      const existingUser = await UserModel.findOne({email})
+      const existingUser = await UserModel.findOne({email}).select('+password')
       if (!existingUser) {
         return errorService.handleError(res, 401, 'EMAIL_NOT_FOUND')
       }
@@ -79,13 +76,13 @@ router.post('/login', [
       errorService.handleError(res, 500, 'SERVER_ERROR')
     }
   }
-])
+]
 
 function isTokenInvalid(data, dbToken) {
   return !data || !dbToken || data._id !== dbToken.userId?.toString()
 }
 
-router.post('/token', async (req, res) => {
+exports.token = async (req, res) => {
   try {
     const {refresh_token: refreshToken} = req.body
     const data = tokenService.validateRefresh(refreshToken)
@@ -104,6 +101,4 @@ router.post('/token', async (req, res) => {
   } catch (err) {
     errorService.handleError(res, 500, 'SERVER_ERROR')
   }
-})
-
-module.exports = router
+}

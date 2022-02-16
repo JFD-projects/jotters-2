@@ -23,6 +23,6 @@ module.exports = (req, res, next) => {
     next()
 
   } catch (err) {
-    errorService.handleError(res, 401, 'TOKEN_REQUIRED')
+    errorService.handleError(res, 401, 'TOKEN_REQUIRED!')
   }
 }

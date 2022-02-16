@@ -1,0 +1,56 @@
+//------------------- Together with .card-container and .card ------------------
+
+.card--jotter {
+    //position: relative;
+    //padding:  0;
+
+    &__title {
+        @include text-truncate;
+        font-size: $font-size-larger;
+    }
+
+    &__text {
+        line-height:   1.4rem;
+        overflow:      hidden;
+        max-height:    4.3rem;
+        text-overflow: ellipsis;
+        word-wrap:     break-word;
+    }
+
+    &__date {
+        font-size: $font-size-small;
+    }
+
+    & .dropdown {
+        //position: absolute;
+        //top:      0;
+        //right:    0;
+    }
+
+    & .dropdown__btn {
+        //position: absolute;
+        //top:      .5rem;
+        //right:    .5rem;
+    }
+
+    & a {
+        display:         flex;
+        align-items:     center;
+        flex-direction:  column;
+        padding:         3rem 1rem;
+        text-decoration: none;
+        color:           inherit;
+        gap:             $gutter-vertical;
+    }
+}
+
+.card--new-jotter {
+    padding:          4rem 0;
+    background-color: rgb($color-grey, 5%);
+    border:           1px solid rgb($color-grey, 25%);
+
+    > .btn {
+        width:       66.666%;
+        white-space: normal;
+    }
+}

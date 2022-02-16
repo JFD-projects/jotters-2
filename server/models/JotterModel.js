@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const schema = new Schema({
-  userId: {type: Schema.Types.ObjectId, ref: 'UserModel', required: true},
+  userId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
   title: String,
   color: String,
   hasPublicNote: {type: Boolean, default: false},

@@ -4,7 +4,7 @@ const errorService = require('../services/errorService')
 
 exports.fetch = async (req, res) => {
   try {
-    const list = JotterModel.find({userId: req.user._id})
+    const list = await JotterModel.find({userId: req.user._id})
 
     res.status(200).send(list)
 

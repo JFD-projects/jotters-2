@@ -3,7 +3,7 @@ const JotterModel = require('../models/JotterModel')
 const NoteModel = require('../models/NoteModel')
 const errorService = require('../services/errorService')
 
-exports.fetch = async (req, res) => {
+exports.fetchAll = async (req, res) => {
   try {
     const {jotterId} = req.query
 
@@ -17,8 +17,8 @@ exports.fetch = async (req, res) => {
       return errorService.handleError(res, 401, 'UNAUTHORIZED')
     }
 
-    let list = await NoteModel.find({jotterId})
-    res.status(200).send(list)
+    const list = await NoteModel.find({jotterId})
+    res.status(200).send(list.length > 0 ? list : null)
 
   } catch (err) {
     errorService.handleError(res, 500, 'SERVER_ERROR')
@@ -41,7 +41,7 @@ exports.post = async (req, res) => {
 
     const newNote = await NoteModel.create(req.body)
 
-    await updateJotterStatistic()
+    await updateJotterStatistic(jotterId)
 
     res.status(201).send(newNote)
 
@@ -52,24 +52,34 @@ exports.post = async (req, res) => {
 
 exports.patch = async (req, res) => {
   try {
-    const {jotterId} = req.body
     const {noteId} = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(jotterId) || !mongoose.Types.ObjectId.isValid(noteId)) {
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
       return errorService.handleError(res, 400, 'INVALID_ID')
     }
 
-    const jotter = await JotterModel.findById(jotterId)
+    const updatedNote = await NoteModel.findById(noteId)
+
+    if (updatedNote === null) {
+      return errorService.handleError(res, 404, 'NOTE_NOT_FOUND')
+    }
+
+    const jotter = await JotterModel.findById(updatedNote.jotterId)
+
+    if (jotter === null) {
+      return errorService.handleError(res, 404, 'JOTTER_NOT_FOUND')
+    }
 
     if (jotter.userId.toString() !== req.user._id) {
       return errorService.handleError(res, 401, 'UNAUTHORIZED')
     }
 
-    const updatedNote = await NoteModel.findByIdAndUpdate(noteId, req.body, {new: true})
+    // await updatedNote.updateOne(req.body, {new: true})
+    const changedNote = await NoteModel.findByIdAndUpdate(noteId, req.body, {new: true})
 
-    await updateJotterStatistic(jotterId)
+    await updateJotterStatistic(jotter._id)
 
-    res.status(200).send(updatedNote)
+    res.status(200).send(changedNote)
 
   } catch (err) {
     errorService.handleError(res, 500, 'SERVER_ERROR')
@@ -78,22 +88,31 @@ exports.patch = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    const {jotterId} = req.body
     const {noteId} = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(jotterId) || !mongoose.Types.ObjectId.isValid(noteId)) {
+    if (!mongoose.Types.ObjectId.isValid(noteId)) {
       return errorService.handleError(res, 400, 'INVALID_ID')
     }
 
-    const jotter = await JotterModel.findById(jotterId)
+    const deletedNote = await NoteModel.findById(noteId)
+
+    if (deletedNote === null) {
+      return errorService.handleError(res, 404, 'NOTE_NOT_FOUND')
+    }
+
+    const jotter = await JotterModel.findById(deletedNote.jotterId)
+
+    if (jotter === null) {
+      return errorService.handleError(res, 404, 'JOTTER_NOT_FOUND')
+    }
 
     if (jotter.userId.toString() !== req.user._id) {
       return errorService.handleError(res, 401, 'UNAUTHORIZED')
     }
 
-    await NoteModel.findByIdAndDelete(noteId)
+    await deletedNote.deleteOne()
 
-    await updateJotterStatistic(jotterId)
+    await updateJotterStatistic(jotter._id)
 
     res.status(204).send(null)
 

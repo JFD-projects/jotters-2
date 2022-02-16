@@ -5,7 +5,7 @@ const noteController = require('../controllers/noteController')
 const router = express.Router({mergeParams: true})
 
 router.route('/')
-      .get(auth, noteController.fetch)
+      .get(auth, noteController.fetchAll)
       .post(auth, noteController.post)
 
 router.route('/:noteId')

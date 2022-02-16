@@ -1,0 +1,61 @@
+.sidebar {
+    display:        flex;
+    align-items:    center;
+    flex-direction: column;
+    gap:            $gutter-vertical;
+
+    @include respond(small) {
+        display: none;
+    }
+}
+
+//------------------------------ Sidebar notes items -----------------------------------
+
+.items-block {
+    display:        flex;
+    flex-direction: column;
+    width:          100%;
+    margin:         0;
+    padding:        0;
+}
+
+.note-item {
+    position:   relative;
+    list-style: none;
+
+    &__link {
+        display:         block;
+        overflow:        hidden;
+        padding:         0.5rem 1rem;
+        list-style:      none;
+        cursor:          pointer;
+        white-space:     nowrap;
+        text-decoration: none;
+        text-overflow:   ellipsis;
+        color:           $color-primary;
+        border:          3px solid transparent;
+        border-radius:   $border-radius;
+        transition:      all $transition-delay ease-in-out;
+
+        &--public {
+            color: $color-secondary;
+        }
+
+        &:hover {
+            background-color: $color-secondary-lightest;
+        }
+    }
+}
+
+.note-item__link.active {
+    border-color: $color-secondary;
+}
+
+// ---------------- Show Public badge -------------------
+.note-item__link > .badge-secondary {
+    display: none;
+}
+
+.note-item__link.public.active > .badge-secondary {
+    display: inline-block;
+}

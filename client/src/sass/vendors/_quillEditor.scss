@@ -1,0 +1,108 @@
+//================ Hide toolbar ================
+.quill.hide-toolbar {
+    & > .ql-toolbar.ql-snow {
+        visibility: hidden;
+        height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+
+        & > span {
+            visibility: hidden;
+        }
+    }
+}
+
+//================ Quill container ================
+.ql-container.ql-snow {
+    border: none;
+
+    & .ql-editor {
+        min-height: 300px;
+    }
+}
+
+//================ Quill toolbar ================
+.ql-toolbar.ql-snow {
+    border: none;
+    border-bottom: 1px solid #CCC;
+    transition: height $transition-delay-long ease-out,
+    visibility $transition-delay-long ease-out,
+    padding $transition-delay-long ease-out;
+
+    & .ql-formats {
+        margin-right: 10px;
+
+        & button {
+            border: 1px solid #CCC;
+            border-radius: 5px;
+        }
+    }
+
+    //================ Fix the location of the three icons ================
+    & .ql-formats > span {
+        border: 1px solid #CCC;
+        border-radius: 5px;
+        &.ql-align,
+        &.ql-color,
+        &.ql-background {
+            & > .ql-picker-label {
+                padding-top: 0;
+                //border: none;
+            }
+        }
+    }
+
+    //================ Quill toolbar tooltips ================
+    & button,
+    & .ql-picker-label {
+        position: relative;
+        border: none;
+    }
+
+    & button::after,
+    & .ql-picker-label::after {
+        display: none;
+        position: absolute;
+        font-size: 14px;
+        font-weight: 400;
+        top: -26px;
+        right: 0;
+        width: auto;
+        padding-right: .5rem;
+        padding-left: .5rem;
+        text-align: center;
+        white-space: nowrap;
+        color: rgb(0, 102, 204);
+        border: 1px solid #D4B943;
+        border-radius: 5px;
+        background-color: #FEF4C5;
+    }
+
+    //================ Show tooltips ================
+    & button:hover::after,
+    & .ql-picker-label:hover::after {display: inline-block;}
+
+    //===================== Tooltips labels ===================
+    & .ql-header .ql-picker-label::after {content: "Header";}
+    & .ql-align .ql-picker-label::after {content: "Align"}
+    & .ql-color .ql-picker-label::after {content: "Color"}
+    & .ql-background .ql-picker-label::after {content: "Background"}
+
+    & .ql-bold::after {content: "Bold"}
+    & .ql-italic::after {content: "Italic"}
+    & .ql-underline::after {content: "Underline"}
+    & .ql-strike::after {content: "Strike"}
+    & .ql-script[value="sub"]::after {content: "Sub"}
+    & .ql-script[value="super"]::after {content: "Super"}
+    & .ql-blockquote::after {content: "Blockquote"}
+    & .ql-code-block::after {content: "Code block"}
+    & .ql-list[value="ordered"]::after {content: "Ordered list"}
+    & .ql-list[value="bullet"]::after {content: "Bullet list"}
+    & .ql-indent[value="-1"]::after {content: "Shift left"}
+    & .ql-indent[value="+1"]::after {content: "Shift right"}
+    & .ql-link::after {content: "Link"}
+    & .ql-image::after {content: "Insert image"}
+    & .ql-video::after {content: "Insert video URL"}
+    & .ql-clean::after {content: "Clear formatting"}
+}

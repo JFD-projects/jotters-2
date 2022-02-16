@@ -1,0 +1,66 @@
+:root {
+    --color-primary:        hsl(195, 100%, 36%);
+    --color-primary-darker: darken(--color-primary, 12)
+}
+
+// COLOR
+$color-white:              #FFF;
+$color-black:              #000;
+$color-bg:                 seashell;
+$color-base:               #222;
+$color-error:              #F04124;
+$color-grey:               #777;
+$color-grey-light:         #CCC;
+
+$color-primary:            hsl(195, 100%, 36%);
+$color-primary-darker:     darken($color-primary, 12);
+$color-primary-dark:       darken($color-primary-darker, 12);
+$color-primary-darkest:    darken($color-primary-dark, 12);
+$color-primary-lighter:    lighten($color-primary, 12);
+$color-primary-light:      lighten($color-primary-lighter, 12);
+
+$color-secondary:          hsl(35, 98%, 54%);
+$color-secondary-lighter:  lighten($color-secondary, 12);
+$color-secondary-light:    lighten($color-secondary-lighter, 12);
+$color-secondary-lightest: lighten($color-secondary-light, 12);
+
+
+// RESPONSIVE BREAKPOINTS
+$bp-large:                 112.5em; // same as big but min-width
+$bp-big:                   112.5em; // 1800px
+$bp-medium:                75em; // 1200px
+$bp-small:                 56.25em; // 900px;
+$bp-tiny:                  37.5em; // 600px;
+
+$bp-large-container:       120rem;
+$bp-big-container:         110rem;
+$bp-medium-container:      90rem;
+$bp-small-container:       75rem;
+$bp-tiny-container:        100%;
+
+// FONT
+$font-primary:             "Open Sans", sans-serif;
+$font-size-default:        1.6rem;
+$font-size-small:          1.4rem;
+$font-size-smallest:       1.2rem;
+$font-size-larger:         1.8rem;
+$font-size-large:          2.5rem;
+$font-size-largest:        3.5rem;
+
+// BORDER
+$border-radius:            4px;
+$border-secondary:         3px solid $color-secondary-lighter;
+$border-primary:           3px solid $color-primary-lighter;
+
+// TRANSITION
+$transition-delay:         200ms;
+$transition-delay-long:    600ms;
+
+// BOX-SHADOW
+$box-shadow-norm:          0 0.5rem 1rem rgb(0 0 0 / 15%);
+$box-shadow-error:         0 0 0 0.25rem rgba(240, 65, 36, 0.25);
+
+// GRID
+$grid-width:               114rem;
+$gutter-vertical:          2rem;
+$gutter-horizontal:        2rem;

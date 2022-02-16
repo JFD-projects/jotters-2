@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const config = require('config')
 const chalk = require('chalk')
@@ -8,6 +9,11 @@ const initDatabase = require('./start/initDatabase')
 const routes = require('./routes')
 
 const app = express()
+
+app.use(cors({
+  origin: 'http://localhost:3100',
+  credentials: true
+}))
 
 if (process.env.NODE_ENV === 'production') {
   console.log('Production:')
@@ -20,7 +26,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 app.use('/api/v2', routes)
-
 
 const port = config.get('port') ?? 8080
 const host = config.get('host') ?? 'localhost'

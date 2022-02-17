@@ -2,8 +2,13 @@ import axios from 'axios'
 import configFile from '../config.json'
 import logService from './log.service'
 
+let baseURL = configFile.apiEndpoint
+if (process.env.NODE_ENV === 'production') { // PRODUCTION
+  baseURL = configFile.productionApiEndpoint
+}
+
 const http = axios.create({
-  baseURL: configFile.apiEndpoint
+  baseURL
 })
 
 http.interceptors.response.use(res => res,

@@ -10,7 +10,7 @@ exports.get = async (req, res) => {
       return errorService.handleError(res, 404, 'LNG_NOT_FOUND')
     }
 
-    res.status(200).send({data})
+    res.status(200).send(data)
 
   } catch (err) {
     errorService.handleError(res, 500, 'SERVER_ERROR')
@@ -28,7 +28,7 @@ exports.patch = async (req, res) => {
     }
 
     const data = await InfoModel.findOneAndUpdate({lng}, req.body, {new: true})
-    res.status(200).send({data})
+    res.status(200).send(data)
 
   } catch (err) {
     errorService.handleError(res, 500, 'SERVER_ERROR')

@@ -13,6 +13,7 @@ $color-grey:               #777;
 $color-grey-light:         #CCC;
 
 $color-primary:            hsl(195, 100%, 36%);
+//$color-primary:            #008ab8;
 $color-primary-darker:     darken($color-primary, 12);
 $color-primary-dark:       darken($color-primary-darker, 12);
 $color-primary-darkest:    darken($color-primary-dark, 12);

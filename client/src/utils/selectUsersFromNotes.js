@@ -6,6 +6,7 @@ export default function selectUsersFromNotes(notes) {
   const usernameList = notes.map(note => ({
     _id: note.userId,
     name: note.userName,
+    image: note.userImage,
     selected: true
   }))
 

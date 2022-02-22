@@ -32,6 +32,27 @@
         font-weight: 300;
         color:       $color-primary;
     }
+
+    &__user-image {
+        display: flex;
+        justify-content: space-around;
+        align-content: center;
+
+        & img {
+            height: 15rem;
+        }
+
+        & figcaption {
+            width: 50%;
+            color: $color-primary;
+            margin: auto 0;
+        }
+    }
+
+    &__server-error-message {
+        margin-top: 0.25rem;
+        color:      $color-error;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -146,6 +167,12 @@
         width: inherit;
         height: inherit;
         fill: $color-primary;
+
+        //& > use {
+        //width: inherit;
+        //height: inherit;
+        //overflow: hidden;
+        //}
     }
 }
 

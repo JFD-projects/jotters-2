@@ -5,7 +5,7 @@ import Spinner from '../../../common/spinner'
 import QuillCard from '../../../quill/quillCard'
 // import DropdownBtn from '../../common/form/dropdownBtn'
 
-const Note = ({note, type, onUpdate, paramsDropdownBtn}) => {
+const Note = ({note, type, onUpdate, paramsDropdownBtn, isAdmin = false}) => {
   const {t} = useTranslation()
   const [content, setContent] = useState('')
   const [readOnly, setReadOnly] = useState(true)
@@ -58,7 +58,7 @@ const Note = ({note, type, onUpdate, paramsDropdownBtn}) => {
                  onChange={handleChange}
                  paramsDropdownBtn={paramsDropdownBtn}/>
 
-      {(type === 'PRIVATE' || type === 'INFO') &&
+      {(type === 'PRIVATE' || (type === 'INFO' && isAdmin)) &&
       <div className="btn-block">
         {readOnly
           ? <>

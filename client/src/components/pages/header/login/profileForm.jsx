@@ -7,19 +7,29 @@ import TextInputLogin from '../../../formElements/textInputLogin.jsx'
 import Spinner from '../../../common/spinner'
 import Notification from '../../../modal/notification'
 import { useLogin } from '../../../../hooks/useLogin'
-import { getErrorMessage, getLoadingStatus, login, resetErrors } from '../../../../store/authSlice'
+import {
+  getCurrentUser,
+  getErrorMessage,
+  getLoadingStatus,
+  resetErrors,
+  updateCurrentUser
+} from '../../../../store/authSlice'
+import { generateUserData } from '../../../../utils/helpers'
 
-const LoginForm = () => {
+const ProfileForm = () => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
-  const {data, isValidForm, reset, setFormType} = useLogin()
+  const {data, isValidForm, reset, setFormType, setData} = useLogin()
   const serverErrorMessage = useSelector(getErrorMessage())
   const isLoading = useSelector((getLoadingStatus()))
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const currentUser = useSelector(getCurrentUser())
   const history = useHistory()
 
-  useEffect(()=>{
-    setFormType('login')
+  const [imageIsLoading, setImageIsLoading] = useState(true)
+
+  useEffect(() => {
+    setFormType('profile')
   }, [])
 
   useEffect(() => {
@@ -33,13 +43,21 @@ const LoginForm = () => {
     setIsSubmitted(false)
   }, [isLoading])
 
+
+  useEffect(() => {
+    if (currentUser) {
+      setData({
+        name: currentUser.name,
+        image: currentUser.image
+      })
+    }
+  }, [currentUser])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (!isValidForm) return
 
-    // const redirect = history.location.state?.from?.pathname ?? '/'
-    // dispatch(login({...data, redirect}))
-    dispatch(login(data))
+    dispatch(updateCurrentUser(data))
     setIsSubmitted(true)
   }
 
@@ -49,26 +67,45 @@ const LoginForm = () => {
     history.goBack()
   }
 
+  const randomChangeImage = () => {
+    setData(prev => ({
+      ...prev,
+      image: generateUserData().image
+    }))
+    setImageIsLoading(true)
+  }
+
+  if (!data) {
+    return <Spinner/>
+  }
+
+  const imageLoaded = () => {
+    setImageIsLoading(false)
+  }
+
   return (
     <Notification onRemoveModal={handleCancel}>
       <form onSubmit={handleSubmit}
             className="form">
 
         <h1 className="form__title">
-          {t('LOG_IN')}
+          {`${t('PROFILE')} ${currentUser.email}`}
         </h1>
 
-        {!isLoading
-          ? <>
-            <TextInputLogin name="email"
-                            label={t('EMAIL')}/>
+        <figure className="form__user-image">
+          {imageIsLoading
+            && <Spinner/>}
 
-            <TextInputLogin name="password"
-                            label={t('PASSWORD')}
-                            type="password"/>
-          </>
+            <img src={data.image}
+                 alt="Authenticated user"
+                 onClick={randomChangeImage}
+                 onLoad={imageLoaded}/>
 
-          : <Spinner/>}
+          <figcaption>{t('CLICK_TO_CHANGE')}</figcaption>
+        </figure>
+
+        <TextInputLogin name="name"
+                        label={t('NAME')}/>
 
         {serverErrorMessage &&
         <p className="form__server-error-message">
@@ -93,4 +130,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default ProfileForm

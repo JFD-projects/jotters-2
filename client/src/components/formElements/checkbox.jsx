@@ -25,7 +25,8 @@ const Checkbox = ({name, label, onChange, checkboxItems = []}) => {
                  id={c._id}/>
           <label className="check-element__label"
                  htmlFor={c._id}>
-            {c.name}
+            <img src={c.image} alt="User"/>
+            <span>{c.name}</span>
           </label>
         </div>
       ))}

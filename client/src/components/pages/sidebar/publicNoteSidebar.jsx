@@ -6,7 +6,7 @@ import Sidebar from './common/sidebar'
 import { useSelector } from 'react-redux'
 import { getCurrentUser } from '../../../store/authSlice'
 
-const PublicNotesSidebar = ({note, isMobile, hideSidebar, ...rest}) => {
+const PublicNoteSidebar = ({note, isMobile, hideSidebar, ...rest}) => {
   const {t} = useTranslation()
   const currentUser = useSelector(getCurrentUser())
   const isOwnNote = note?.userId === currentUser?._id
@@ -22,7 +22,7 @@ const PublicNotesSidebar = ({note, isMobile, hideSidebar, ...rest}) => {
       </Link>
 
       {isOwnNote &&
-      <Link to={'/jotters/' + note.jotterId + '/' + note._id}
+      <Link to={'/jotters/' + note?.jotterId + '/' + note?._id}
             className="btn btn--secondary">
         <span>{t('TO_PRIVATE')}</span>
       </Link>
@@ -31,4 +31,4 @@ const PublicNotesSidebar = ({note, isMobile, hideSidebar, ...rest}) => {
   )
 }
 
-export default PublicNotesSidebar
+export default PublicNoteSidebar

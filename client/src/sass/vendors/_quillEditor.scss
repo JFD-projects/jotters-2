@@ -16,6 +16,7 @@
 //================ Quill container ================
 .ql-container.ql-snow {
     border: none;
+    height: inherit;
 
     & .ql-editor {
         min-height: 300px;

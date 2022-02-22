@@ -1,61 +1,30 @@
-import httpService from './http.service'
+import httpService from './httpService'
 import getTitleFromContent from '../utils/getTitleFromContent'
-import { getAccessToken } from './localStorage.service'
 
 const noteEndpoint = 'note/'
 
 const noteService = {
   fetchAll: async (jotterId) => {
     return await httpService.get(noteEndpoint,
-      {
-        params: {jotterId},
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+      {params: {jotterId}})
   },
 
-  // fetchPublic: async () => {
-  //   const data = await httpService.get(noteEndpoint,
-  //     {
-  //       params: {public: true},
-  //       headers: {Authorization: 'Bearer ' + getAccessToken()},
-  //       withCredentials: true
-  //     })
-  //   return data
-  // },
-
   getById: async (noteId) => {
-    return await httpService.get(noteEndpoint + noteId,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    return await httpService.get(noteEndpoint + noteId)
   },
 
   update: async (noteId, body) => {
     return await httpService.patch(noteEndpoint + noteId,
-      {...body, title: getTitleFromContent(body.content)},
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+      {...body, title: getTitleFromContent(body.content)})
   },
 
   delete: async (noteId) => {
-    await httpService.delete(noteEndpoint + noteId,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    await httpService.delete(noteEndpoint + noteId)
   },
 
   add: async (body) => {
     return await httpService.post(noteEndpoint,
-      body,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+      body)
   }
 }
 

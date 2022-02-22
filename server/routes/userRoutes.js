@@ -7,7 +7,7 @@ const router = express.Router({mergeParams: true})
 router.get('/', auth, userController.fetch)
 
 router.route('/:userId')
-      .get(userController.get)
+      .get(auth, userController.get)
       .patch(auth, userController.patch)
 
 module.exports = router

@@ -1,49 +1,26 @@
-import httpService from './http.service'
-import { getAccessToken } from './localStorage.service'
+import httpService from './httpService'
 
 const jotterEndpoint = 'jotter/'
 
 const jotterService = {
   fetchAll: async () => {
-    return await httpService.get(jotterEndpoint,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    return await httpService.get(jotterEndpoint)
   },
 
   getById: async (id) => {
-    return await httpService.get(jotterEndpoint + id,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    return await httpService.get(jotterEndpoint + id)
   },
 
   update: async (id, body) => {
-    return await httpService.patch(jotterEndpoint + id,
-      body,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    return await httpService.patch(jotterEndpoint + id, body)
   },
 
   delete: async (id) => {
-    await httpService.delete(jotterEndpoint + id,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    await httpService.delete(jotterEndpoint + id)
   },
 
   add: async (body) => {
-    return await httpService.post(jotterEndpoint,
-      body,
-      {
-        headers: {Authorization: 'Bearer ' + getAccessToken()},
-        withCredentials: true
-      })
+    return await httpService.post(jotterEndpoint, body)
   }
 }
 

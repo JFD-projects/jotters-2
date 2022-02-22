@@ -44,6 +44,7 @@
   "LOGIN": "Login",
   "LOG_IN": "Log in",
   "REGISTER": "Register",
+  "PROFILE": "Profile",
   "LOG_OUT": "Log out",
   "NAME": "Name",
   "EMAIL": "Email",
@@ -58,5 +59,6 @@
   "EMAIL_WRONG": "Wrong-format email",
   "NAME_REQUIRED": "Name is required",
   "NAME_MIN": "Name must be {{num}} characters or more",
-  "SUBMIT": "Submit"
+  "SUBMIT": "Submit",
+  "CLICK_TO_CHANGE": "Click on the image to generate a new one"
 }

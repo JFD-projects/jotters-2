@@ -39,6 +39,7 @@ if (process.env.NODE_ENV === 'production') { // PRODUCTION
 } else if (process.env.NODE_ENV === 'development') { // DEVELOPMENT
   console.log(chalk.yellowBright('Development mode'))
 
+  app.use(morgan('dev'))
   app.use(cors({
     origin: 'http://localhost:3100',
     credentials: true
@@ -49,7 +50,6 @@ if (process.env.NODE_ENV === 'production') { // PRODUCTION
   port = config.get('port') ?? 8080
   host = config.get('host') ?? 'localhost'
 
-  app.use(morgan('dev'))
 }
 
 

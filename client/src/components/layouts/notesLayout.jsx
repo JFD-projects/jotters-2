@@ -52,9 +52,6 @@ const NotesLayout = () => {
   }, [notes?.length])
 
   async function handleUpdateNote(note) {
-    // =========================
-    console.log('note:', note)
-    // =========================
     dispatch(updateNote(note))
   }
 

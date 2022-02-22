@@ -6,7 +6,7 @@ import 'react-quill/dist/quill.snow.css'
 import 'react-toastify/dist/ReactToastify.css'
 import './sass/main.scss'
 
-import logService from './services/log.service'
+import logService from './services/logService'
 import i18nService from './services/i18nextService'
 import App from './App'
 import createStore from './store/createStore'

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 
 import authService from '../services/authService'
 import errorServiceOld from '../services/errorServiceOld'
-import localStorageService from '../services/localStorage.service'
+import localStorageService from '../services/localStorageService'
 import userService from '../services/userService'
 
 const AuthContext = React.createContext()

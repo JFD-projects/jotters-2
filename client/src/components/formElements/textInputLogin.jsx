@@ -23,7 +23,7 @@ const TextInputLogin = ({name, label, type = 'text'}) => {
     }))
   }
 
-  const handleBlur = (event) => {
+  const handleBlur = () => {
     setIsTouched(prev => ({
       ...prev,
       [name]: true
@@ -51,8 +51,8 @@ const TextInputLogin = ({name, label, type = 'text'}) => {
               onClick={toggleShowPassword}>
         <svg className={'field__icon'}>
           {showPassword
-            ? <use xlinkHref="./sprite.svg#icon-visibility_off"/>
-            : <use xlinkHref="./sprite.svg#icon-visibility_on"/>}
+            ? <use xlinkHref="/sprite.svg#icon-visibility_off"/>
+            : <use xlinkHref="/sprite.svg#icon-visibility_on"/>}
         </svg>
       </button>}
 

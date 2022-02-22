@@ -75,6 +75,15 @@
 
     &__label {
         font-size: inherit;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        & img {
+            width: 4.5rem;
+            height: 4.5rem;
+            border-radius: 50%;
+        }
     }
 }
 

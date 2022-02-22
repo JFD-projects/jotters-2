@@ -39,8 +39,6 @@ export const loadPublicNotes = () => async (dispatch) => {
   }
 }
 
-
-
 export const getPublicNoteById = (publicNoteId) => (state) => {
   return state.publicNotes.entities ? state.publicNotes.entities.find(p => p._id === publicNoteId) : null
 }

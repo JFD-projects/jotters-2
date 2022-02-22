@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import errorService from '../services/errorService'
-import infoService from '../services/info.service'
+import infoService from '../services/infoService'
 
 const initialState = {
   infoNote: null,

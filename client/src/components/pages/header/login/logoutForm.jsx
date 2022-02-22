@@ -1,28 +1,33 @@
-import React from 'react'
-import {useHistory} from 'react-router-dom'
-import {useTranslation} from 'react-i18next'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import Notification from '../../../modal/notification'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../../../store/authSlice'
+import { getLoadingStatus, logout } from '../../../../store/authSlice'
+import { useLogin } from '../../../../hooks/useLogin'
+import Spinner from '../../../common/spinner'
 
-const LogoutForm = ({onRemoveModal}) => {
+const LogoutForm = () => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
+  const {setFormType} = useLogin()
+  const isLoading = useSelector((getLoadingStatus()))
   const history = useHistory()
+
+  useEffect(() => {
+    setFormType('logout')
+  }, [])
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
     dispatch(logout())
-
-    // logout()
-    // history.push('/')
-    onRemoveModal()
+    history.goBack()
   }
 
   const handleCancel = () => {
-    onRemoveModal()
+    history.goBack()
   }
 
   return (
@@ -33,6 +38,9 @@ const LogoutForm = ({onRemoveModal}) => {
         <h1 className="form__title">
           {t('LOG_OUT')}
         </h1>
+
+        {isLoading &&
+        <Spinner/>}
 
         <div className="btn-block">
           <button type="button"

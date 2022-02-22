@@ -3,41 +3,29 @@ import { useTranslation } from 'react-i18next'
 import PublicNotesSidebar from '../pages/sidebar/publicNotesSidebar'
 import PublicNotesPage from '../pages/main/publicNotes/publicNotesPage'
 import Layout from './common/layout'
-// import {sortArrayBy} from '../../utils/helpers'
 import selectUsersFromNotes from '../../utils/selectUsersFromNotes'
-// import useNotes from '../../hooks/useNotes'
-import { useDispatch, useSelector } from 'react-redux'
-import { getLoadingStatus, getPublicNotesList, loadPublicNotes } from '../../store/publicNoteSlice'
+import { useSelector } from 'react-redux'
+import { getLoadingStatus, getPublicNotesList } from '../../store/publicNoteSlice'
+import PublicNoteLoader from '../hoc/publicNoteLoader'
 
 const PublicNotesLayout = () => {
   const {t} = useTranslation()
-  const dispatch = useDispatch()
-  // const [notes, setNotes] = useState([])
+  // const dispatch = useDispatch()
   const [users, setUsers] = useState()
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('byDate')
   const publicNotes = useSelector(getPublicNotesList(sort))
   const publicNotesIsLoading = useSelector(getLoadingStatus())
-  // const {fetchPublicNotes} = useNotes()
 
-  useEffect(() => {
-    // fetchPublicNotes().then(data => {
-    //   setNotes(sortArrayBy(sort, data))
-    //   const users = selectUsersFromNotes(data)
-    //   setUsers(users)
-    // })
-    dispatch(loadPublicNotes())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(loadPublicNotes())
+  // }, [])
 
   useEffect(() => {
     if (!publicNotesIsLoading) {
       setUsers(selectUsersFromNotes(publicNotes))
     }
   }, [publicNotesIsLoading])
-
-  // useEffect(() => {
-  //   setNotes(sortArrayBy(sort, notes))
-  // }, [sort])
 
   const handleSearch = (value) => {
     setSearch(value)
@@ -69,15 +57,17 @@ const PublicNotesLayout = () => {
   const filteredNotes = filterNotes()
 
   return (
-    <Layout title={publicNotesIsLoading ? '...' : t('PUBLIC_NOTES')}>
-      <PublicNotesSidebar search={search}
-                          sort={sort}
-                          users={users}
-                          onSearch={handleSearch}
-                          onSort={handleSort}
-                          onSelect={handleSelect}/>
-      <PublicNotesPage notes={filteredNotes}/>
-    </Layout>
+    <PublicNoteLoader>
+      <Layout title={publicNotesIsLoading ? '...' : t('PUBLIC_NOTES')}>
+        <PublicNotesSidebar search={search}
+                            sort={sort}
+                            users={users}
+                            onSearch={handleSearch}
+                            onSort={handleSort}
+                            onSelect={handleSelect}/>
+        <PublicNotesPage notes={filteredNotes}/>
+      </Layout>
+    </PublicNoteLoader>
   )
 }
 

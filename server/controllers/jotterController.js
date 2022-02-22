@@ -35,13 +35,15 @@ exports.patch = async (req, res) => {
       return errorService.handleError(res, 400, 'INVALID_ID')
     }
 
-    const updatedJotter = await JotterModel.findById(jotterId)
+    const jotter = await JotterModel.findById(jotterId)
 
-    if (updatedJotter.userId.toString() !== req.user._id) {
+    if (jotter.userId.toString() !== req.user._id) {
       return errorService.handleError(res, 401, 'UNAUTHORIZED')
     }
 
-    await updatedJotter.update(req.body, {new: true})
+    await jotter.update(req.body, {new: true})
+
+    const updatedJotter = await JotterModel.findById(jotterId)
 
     res.status(200).send(updatedJotter)
 

@@ -36,3 +36,11 @@ export function filterArrayBy(filter, arr) {
 filterArrayBy.propTypes = {
   filter: PropTypes.oneOf(['all', 'withPublicNotes']).isRequired,
 }
+
+export function generateUserData() {
+  return {
+    image: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
+    .toString(36)
+    .substring(7)}.svg`,
+  }
+}

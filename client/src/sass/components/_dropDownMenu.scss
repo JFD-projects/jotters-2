@@ -79,6 +79,15 @@
     }
 }
 
+.dropdown--big {
+    height: 4.5rem;
+    width:  4.5rem;
+
+    & > .dropdown__menu {
+        top: 4.25rem;
+    }
+}
+
 .dropdown-item {
     padding:         0;
     text-align:      inherit;
@@ -115,10 +124,10 @@
     }
 
     &__icon {
-        width:         2rem;
-        height:        2rem;
-        fill:          $color-primary;
-        border-radius: 25%;
+        width:  2rem;
+        height: 2rem;
+        fill:   $color-primary;
+        //border-radius: 25%;
 
         &:hover {
             box-shadow: 0 1rem 2rem rgba($color-black, .2);

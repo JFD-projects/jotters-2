@@ -10,6 +10,8 @@ import JotterNotesSidebar from '../pages/sidebar/jotterNotesSidebar/jotterNotesS
 import { loadJotters, getJotterById, getJottersLoadingStatus } from '../../store/jotterSlice'
 import { loadNotes, getNotesList, getNotesLoadingStatus, getNoteById } from '../../store/noteSlice'
 import Spinner from '../common/spinner'
+import { PRIVATE_BREADCRUMBS } from '../../utils/helpers'
+import { updateBreadcrumbs } from '../../store/breadcrumbsSlice'
 
 const NotesLayout = () => {
   const {t} = useTranslation()
@@ -29,6 +31,8 @@ const NotesLayout = () => {
     if (!jotter) {
       dispatch(loadJotters())
     }
+    const crumbs = PRIVATE_BREADCRUMBS.concat([{to: '/', label: jotter.title}])
+    dispatch(updateBreadcrumbs(crumbs))
   }, [])
 
   useEffect(() => {

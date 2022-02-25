@@ -4,13 +4,15 @@ import PublicNotesSidebar from '../pages/sidebar/publicNotesSidebar'
 import PublicNotesPage from '../pages/main/publicNotes/publicNotesPage'
 import Layout from './common/layout'
 import selectUsersFromNotes from '../../utils/selectUsersFromNotes'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getLoadingStatus, getPublicNotesList } from '../../store/publicNoteSlice'
 import PublicNoteLoader from '../hoc/publicNoteLoader'
+import { updateBreadcrumbs } from '../../store/breadcrumbsSlice'
+import { PUBLIC_BREADCRUMBS } from '../../utils/helpers'
 
 const PublicNotesLayout = () => {
   const {t} = useTranslation()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const [users, setUsers] = useState()
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState('byDate')
@@ -20,6 +22,10 @@ const PublicNotesLayout = () => {
   // useEffect(() => {
   //   dispatch(loadPublicNotes())
   // }, [])
+
+  useEffect(() => {
+    dispatch(updateBreadcrumbs(PUBLIC_BREADCRUMBS))
+  }, [])
 
   useEffect(() => {
     if (!publicNotesIsLoading) {

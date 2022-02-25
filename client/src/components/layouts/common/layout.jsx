@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../pages/header/header'
+import Breadcrumbs from '../../pages/breadcrumbs/breadcrumbs'
 
 // Breakpoint 900px for phones and tablets portrait ($bp-small)
 const BP_SMALL = 900
@@ -30,6 +31,8 @@ const Layout = ({children, ...rest}) => {
   return (
     <div className="container">
       <Header navSidebar={navSidebar} {...rest}/>
+
+      <Breadcrumbs/>
 
       {showSidebar &&
       <aside className="sidebar">

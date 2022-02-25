@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next'
 import { loadInfoNote, getInfoNote, getInfoNotesLoadingStatus } from '../../store/infoSlice'
 import Spinner from '../common/spinner'
 import { getCurrentUser } from '../../store/authSlice'
+import { updateBreadcrumbs } from '../../store/breadcrumbsSlice'
+import { INFO_BREADCRUMBS } from '../../utils/helpers'
 
 
 const InfoLayout = () => {
@@ -20,6 +22,10 @@ const InfoLayout = () => {
   useEffect(() => {
     dispatch(loadInfoNote(i18n.language))
   }, [i18n.language])
+
+  useEffect(() => {
+    dispatch(updateBreadcrumbs(INFO_BREADCRUMBS))
+  }, [])
 
   return (
     <Layout>

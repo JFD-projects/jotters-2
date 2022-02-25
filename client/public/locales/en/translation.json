@@ -60,5 +60,6 @@
   "NAME_REQUIRED": "Name is required",
   "NAME_MIN": "Name must be {{num}} characters or more",
   "SUBMIT": "Submit",
-  "CLICK_TO_CHANGE": "Click on the image to generate a new one"
+  "CLICK_TO_CHANGE": "Click on the image to generate a new one",
+  "HOME": "Home"
 }

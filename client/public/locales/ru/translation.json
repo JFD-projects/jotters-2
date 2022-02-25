@@ -60,5 +60,6 @@
   "NAME_REQUIRED": "Имя обязательно для заполнения",
   "NAME_MIN": "Имя должно состоять из {{num}} символов или более",
   "SUBMIT": "Отправить",
-  "CLICK_TO_CHANGE": "Click on the image to generate a new one"
+  "CLICK_TO_CHANGE": "Кликните по картинке чтобы сгенерировать новую",
+  "HOME": "Дом"
 }

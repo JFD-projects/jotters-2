@@ -5,8 +5,10 @@ import JottersSidebar from '../pages/sidebar/jottersSidebar'
 import Jotters from '../pages/main/jotters/jotters'
 import Layout from './common/layout'
 import { useDispatch, useSelector } from 'react-redux'
-import {getJottersList, getJottersLoadingStatus, loadJotters} from '../../store/jotterSlice'
+import { getJottersList, getJottersLoadingStatus, loadJotters } from '../../store/jotterSlice'
 import Spinner from '../common/spinner'
+import { updateBreadcrumbs } from '../../store/breadcrumbsSlice'
+import { PRIVATE_BREADCRUMBS } from '../../utils/helpers'
 
 const JottersLayout = () => {
   const {t} = useTranslation()
@@ -16,8 +18,9 @@ const JottersLayout = () => {
   const jotters = useSelector(getJottersList(filter, sort))
   const jottersIsLoading = useSelector(getJottersLoadingStatus())
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(loadJotters())
+    dispatch(updateBreadcrumbs(PRIVATE_BREADCRUMBS))
   }, [])
 
   const handleSort = ({value}) => {

@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import NoteItem from './noteItem'
 import Spinner from '../../../common/spinner'
 import Sidebar from '../common/sidebar'
-import { getNotesList, getNotesLoadingStatus } from '../../../../store/noteSlice'
+import { addNewNote, getNotesList, getNotesLoadingStatus } from '../../../../store/noteSlice'
 
-const JotterNotesSidebar = ({onCreateNewNote, isMobile, hideSidebar, ...rest}) => {
+const JotterNotesSidebar = ({jotterId, isMobile, hideSidebar, ...rest}) => {
   const {t} = useTranslation()
+  const dispatch = useDispatch()
   const notes = useSelector(getNotesList())
   const notesIsLoading = useSelector(getNotesLoadingStatus())
 
@@ -16,6 +17,10 @@ const JotterNotesSidebar = ({onCreateNewNote, isMobile, hideSidebar, ...rest}) =
     if (isMobile) {
       hideSidebar()
     }
+  }
+
+  const handleCreateNewNote = async () => {
+    dispatch(addNewNote({jotterId, title: t('MY_NEW_NOTE')}))
   }
 
   if (notesIsLoading) {
@@ -39,11 +44,10 @@ const JotterNotesSidebar = ({onCreateNewNote, isMobile, hideSidebar, ...rest}) =
           {notes.map(note => <NoteItem key={note._id}
                                        note={note}
                                        onHideMobileSideBar={onHideMobileSideBar}/>)}
-        </ul>
-      }
+        </ul>}
 
       <button className="btn btn--secondary"
-              onClick={onCreateNewNote}>
+              onClick={handleCreateNewNote}>
         {t('NEW_NOTE')}
       </button>
 

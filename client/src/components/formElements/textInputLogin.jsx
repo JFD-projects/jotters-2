@@ -1,41 +1,52 @@
-import React, {useEffect, useState} from 'react'
-import {useLogin} from '../../hooks/useLogin'
+import React, {useState} from 'react'
 
-const TextInputLogin = ({name, label, type = 'text'}) => {
-  const {data, setData, errors, isTouched, setIsTouched, updateErrors} = useLogin()
+const TextInputLogin = ({name, label, type = 'text', value, onChange, onBlur, error, isTouched}) => {
   const [showPassword, setShowPassword] = useState(false)
 
-  useEffect(() => {
-    updateErrors(name)
-  }, [data[name]])
-
-  const valueIsValid = !errors[name]
-  const hasError = !valueIsValid && isTouched[name]
+  const valueIsValid = !error
+  const hasError = !valueIsValid && isTouched
 
   const toggleShowPassword = () => {
     setShowPassword(prev => !prev)
   }
 
+  // const handleChange = (event) => {
+  //   setData(prev => ({
+  //     ...prev,
+  //     [name]: event.target.value
+  //   }))
+  // }
   const handleChange = (event) => {
-    setData(prev => ({
-      ...prev,
-      [name]: event.target.value
-    }))
+    onChange({name: event.target.name, value: event.target.value})
   }
 
-  const handleBlur = () => {
-    setIsTouched(prev => ({
-      ...prev,
-      [name]: true
-    }))
+  const handleBlur = (event) => {
+    onBlur({name: event.target.name})
   }
+
+  // const handleBlur = () => {
+  //   setIsTouched(prev => ({
+  //     ...prev,
+  //     [name]: true
+  //   }))
+  // }
+
+  // const updateErrors = (name) => {
+  //   // const value = data[name]
+  //   // const config = selectConfig(formType, name)
+  //   const error = validateValue(value, config)
+  //   setErrors(prev => ({
+  //     ...prev,
+  //     [name]: error
+  //   }))
+  // }
 
   return (
     <div className="field has-validation">
       <input name={name}
              id={name}
              type={showPassword ? 'text' : type}
-             value={data[name]}
+             value={value}
              placeholder={label}
              onChange={handleChange}
              className={'field__input' + (hasError ? ' is-invalid' : '')}
@@ -58,7 +69,7 @@ const TextInputLogin = ({name, label, type = 'text'}) => {
 
       {hasError &&
       <div className="invalid-feedback">
-        {errors[name]}
+        {error}
       </div>}
     </div>
   )

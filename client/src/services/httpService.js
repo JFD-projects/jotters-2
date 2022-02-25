@@ -11,6 +11,8 @@ if (process.env.NODE_ENV === 'production') { // PRODUCTION
 
 const http = axios.create({baseURL})
 
+let sendRefreshIsAllowed = true
+
 http.interceptors.response.use(res => res,
   err => {
     const expectedError = err.response // && err.response.status >= 400 && err.response.status < 500
@@ -30,8 +32,11 @@ http.interceptors.request.use(
 
     if (refreshToken && (expiresDate > Date.now())) {
       // Refresh tokens only if last refresh was more then 20 seconds ago
-      if (expiresDate < (Date.now() + (configFile.tokenExpiresIn - 20) * 1000)) {
+      if ((expiresDate < (Date.now() + (configFile.tokenExpiresIn - 20) * 1000 )
+        && sendRefreshIsAllowed)) {
+        sendRefreshIsAllowed = false
         const data = await authService.refresh()
+        sendRefreshIsAllowed = true
         localStorageService.setToken(data)
       }
     } else {

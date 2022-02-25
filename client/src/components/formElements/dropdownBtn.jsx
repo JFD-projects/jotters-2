@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { showModal } from '../../store/modalSlice'
+import i18next from 'i18next'
 
 const DropdownBtn = ({params}) => {
-  const {img, title, isBig = false, items} = params
+  const dispatch = useDispatch()
+  const {img, title, isBig = false, items, data} = params
   const [open, setOpen] = useState(false)
   const dropdown = useRef(null)
-
-  const history = useHistory()
-  const {url} = useRouteMatch()
 
   const handleClickOutside = event => {
     if (dropdown.current && !dropdown.current.contains(event.target)) {
@@ -24,7 +24,11 @@ const DropdownBtn = ({params}) => {
 
   const handleSelect = (action) => {
     setOpen(false)
-    history.push(`${url}/${action}`)
+    if (['en', 'ru'].includes(action)) {
+      i18next.changeLanguage(action)
+    } else {
+      dispatch(showModal({currentModal: action, data}))
+    }
   }
 
   return (
@@ -46,7 +50,6 @@ const DropdownBtn = ({params}) => {
             <li key={action}
                 className="dropdown-item">
               <button className="dropdown-item__btn"
-                // to={"/info/login"}
                       onClick={() => handleSelect(action)}
                       disabled={disabled}>
                 {img}

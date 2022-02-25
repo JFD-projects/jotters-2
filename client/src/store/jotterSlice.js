@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import jotterService from '../services/jotterService'
 import errorService from '../services/errorService'
 import { sortArrayBy, filterArrayBy } from '../utils/helpers'
+import { logout } from './authSlice'
 
 const initialState = {
   entities: null,
@@ -20,7 +21,7 @@ const slice = createSlice({
       state.entities = action.payload
       state.isLoading = false
     },
-    requestFailed(state) {
+    requestFailed(state, action) {
       state.isLoading = false
     },
     added(state, action) {
@@ -49,6 +50,9 @@ export const loadJotters = () => async (dispatch) => {
     dispatch(received(data))
   } catch (err) {
     errorService.handleError(err)
+    if ((err.response?.status === 401) && (err.response?.data?.message === 'TOKEN_REQUIRED')) {
+      dispatch(logout())
+    }
     dispatch(requestFailed())
   }
 }

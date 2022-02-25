@@ -44,3 +44,12 @@ export function generateUserData() {
     .substring(7)}.svg`,
   }
 }
+
+export const FORM_REGISTER = 'register'
+export const FORM_LOGIN = 'login'
+export const FORM_PROFILE = 'profile'
+export const FORM_LOGOUT = 'logout'
+export const FORM_JOTTER_SETTINGS = 'jotterSettings'
+export const FORM_DELETE_JOTTER = 'deleteJotter'
+export const FORM_NOTE_SETTINGS = 'noteSettings'
+export const FORM_DELETE_NOTE = 'deleteNote'

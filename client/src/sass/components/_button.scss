@@ -32,15 +32,6 @@
         transform:  translateY(-1px);
     }
 
-    &:disabled {
-        color:            $color-grey-light !important;
-        background-color: $color-grey !important;
-        border-color:     transparent;
-        box-shadow:       none;
-        cursor:           unset;
-        transform:        none;
-    }
-
     &--primary {
         &,
         &:link,
@@ -124,6 +115,16 @@
 
     &.w-33 {
         flex: 0 0 calc((100% - 2 * #{$gutter-horizontal}) / 3);
+    }
+
+    &:disabled,
+    &--disabled {
+        color:            $color-grey-light !important;
+        background-color: $color-grey !important;
+        border-color:     transparent !important;
+        box-shadow:       none !important;
+        cursor:           not-allowed !important;
+        transform:        none !important;
     }
 }
 

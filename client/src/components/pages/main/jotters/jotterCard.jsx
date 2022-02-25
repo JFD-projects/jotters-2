@@ -2,31 +2,42 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { dateToString } from '../../../../utils/dateToString'
 import { useTranslation } from 'react-i18next'
-import DropdownBtn from '../../../formElements/dropdownBtn_old'
+import DropdownBtn from '../../../formElements/dropdownBtn'
+import { FORM_DELETE_JOTTER, FORM_JOTTER_SETTINGS } from '../../../../utils/helpers'
 
-const JotterCard = ({jotter, paramsDropdownBtn}) => {
+const JotterCard = ({jotter}) => {
   const {t} = useTranslation()
 
-  const onClickDropdownBtn = (action) => {
-    paramsDropdownBtn.onClick(action, jotter)
-  }
-
-  const newParamsDropdownBtn = {...paramsDropdownBtn, onClick: onClickDropdownBtn}
-
-  if (jotter.notesNumber > 0) {
-    newParamsDropdownBtn.items = newParamsDropdownBtn.items.map(i => {
-      if (i.action === 'delete') {
-        return {...i, disabled: true}
+  //================================ PARAMS.DROPDOWN_BTN =======================
+  const paramsDropdownBtn = {
+    img: <svg className="dropdown__icon dropdown__icon--primary">
+      <use xlinkHref="/sprite.svg#icon-circle-down"/>
+    </svg>,
+    title: t('CONTROL'),
+    data: jotter,
+    items: [
+      {
+        action: FORM_JOTTER_SETTINGS,
+        title: t('SETTINGS'),
+        img: <svg className="dropdown-item__icon">
+          <use xlinkHref="/sprite.svg#icon-settings"/>
+        </svg>,
+        disabled: false
+      },
+      {
+        action: FORM_DELETE_JOTTER,
+        title: t('DELETE_JOTTER'),
+        img: <svg className="dropdown-item__icon">
+          <use xlinkHref="/sprite.svg#icon-bin"/>
+        </svg>,
+        disabled: (jotter.notesNumber > 0)
       }
-      return i
-    })
+    ]
   }
+  //================================
 
   return (
     <div className="card-container">
-
-      <DropdownBtn params={newParamsDropdownBtn}/>
-
       <Link to={`/jotters/${jotter._id}`}
             className="card card--jotter"
             style={{background: jotter.color}}>
@@ -40,8 +51,9 @@ const JotterCard = ({jotter, paramsDropdownBtn}) => {
         <p className="card--jotter__date">
           {`${t('CHANGED')}: ${dateToString(jotter.updatedAt)}`}
         </p>
-
       </Link>
+
+      <DropdownBtn params={paramsDropdownBtn}/>
     </div>
   )
 }

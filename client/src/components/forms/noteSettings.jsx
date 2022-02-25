@@ -3,10 +3,13 @@ import { useTranslation } from 'react-i18next'
 import Notification from '../modal/notification'
 import Spinner from '../common/spinner'
 import Radio from '../formElements/radio'
+import { useDispatch } from 'react-redux'
+import { updateNote } from '../../store/noteSlice'
 
-const NoteSettings = ({header, settingsData, onSubmit, onRemoveModal}) => {
+const NoteSettings = ({hideModal, note}) => {
   const {t} = useTranslation()
-  const [data, setData] = useState({...settingsData, public: settingsData.isPublic.toString()})
+  const dispatch = useDispatch()
+  const [data, setData] = useState({...note, public: note.isPublic.toString()})
 
   const handleChange = (field) => {
     setData(prev => ({
@@ -17,16 +20,20 @@ const NoteSettings = ({header, settingsData, onSubmit, onRemoveModal}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    onSubmit({...data, isPublic: data.public === 'true'})
-    onRemoveModal()
+    dispatch(updateNote({...data, isPublic: data.public === 'true'}))
+    hideModal()
+  }
+
+  const handleCancel = () => {
+    hideModal()
   }
 
   return (
-    <Notification onRemoveModal={onRemoveModal}>
+    <Notification onRemoveModal={handleCancel}>
       <form onSubmit={handleSubmit}
             className="form">
 
-        <h1 className="form__title">{header}</h1>
+        <h1 className="form__title">{t('NOTE')}</h1>
 
         {data
           ? <>
@@ -44,7 +51,7 @@ const NoteSettings = ({header, settingsData, onSubmit, onRemoveModal}) => {
         <div className="btn-block">
           <button type="button"
                   className="btn btn--primary w-33"
-                  onClick={onRemoveModal}>
+                  onClick={handleCancel}>
             {t('CANCEL')}
           </button>
 
@@ -57,7 +64,6 @@ const NoteSettings = ({header, settingsData, onSubmit, onRemoveModal}) => {
 
     </Notification>
   )
-
 }
 
 export default NoteSettings

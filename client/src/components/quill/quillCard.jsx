@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactQuill from 'react-quill'
 import {toolbarModules} from '../../utils/quill'
-import DropdownBtn from '../formElements/dropdownBtn_old'
+import DropdownBtn from '../formElements/dropdownBtn'
 
 const QuillCard = ({readOnly, value, onChange, type, paramsDropdownBtn}) => {
   return (

@@ -18,7 +18,7 @@ let port
 let host
 
 if (process.env.NODE_ENV === 'production') { // PRODUCTION
-  console.log('Production:')
+  console.log('Production mode')
 
   app.use(cors({
     origin: process.env.origin ?? 'http://localhost:8080',

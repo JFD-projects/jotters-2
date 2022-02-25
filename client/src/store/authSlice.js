@@ -1,7 +1,6 @@
 import localStorageService from '../services/localStorageService'
 import { createSlice } from '@reduxjs/toolkit'
 
-import history from '../utils/history'
 import authService from '../services/authService'
 import errorService from '../services/errorService'
 import userService from '../services/userService'
@@ -68,7 +67,6 @@ export const register = ({name, email, password, ...rest}) => async dispatch => 
       email,
       ...rest
     }))
-    // history.goBack()
 
   } catch (err) {
     errorService.handleError(err)
@@ -76,22 +74,17 @@ export const register = ({name, email, password, ...rest}) => async dispatch => 
   }
 }
 
-export const login = ({email, password, redirect}) => async dispatch => {
+export const login = ({email, password}) => async dispatch => {
   dispatch(requested())
   try {
     const data = await authService.login({email, password})
     localStorageService.setToken(data)
     const currentUser = await userService.getCurrentUser()
     dispatch(requestSuccess(currentUser))
-    // history.push(redirect)
-    // history.goBack()
 
   } catch (err) {
     errorService.handleError(err)
     dispatch(requestFailed(err.response?.data?.message))
-    // =========================
-    console.log('err.response?.data?.message:', err.response?.data?.message)
-    // =========================
   }
 }
 
@@ -100,7 +93,7 @@ export const updateCurrentUser = (payload) => async (dispatch) => {
   try {
     const currentUser = await userService.updateCurrentUser(payload)
     dispatch(requestSuccess(currentUser))
-    // history.push('/users')
+
   } catch (err) {
     errorService.handleError(err)
     dispatch(requestFailed())
@@ -110,14 +103,11 @@ export const updateCurrentUser = (payload) => async (dispatch) => {
 export const logout = () => async dispatch => {
   localStorageService.removeAuthData()
   dispatch(userLoggedOut())
-  history.push('/')
 }
 
 export const resetErrors = () => async dispatch => {
   dispatch(clearErrorMessage())
 }
-
-
 
 export const getIsLoggedIn = () => state => state.auth.isLoggedIn
 

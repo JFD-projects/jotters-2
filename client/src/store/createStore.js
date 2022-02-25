@@ -4,13 +4,15 @@ import notes from './noteSlice'
 import info from './infoSlice'
 import auth from './authSlice'
 import publicNotes from './publicNoteSlice'
+import modal from './modalSlice'
 
 const rootReducer = combineReducers({
   info,
   jotters,
   notes,
   auth,
-  publicNotes
+  publicNotes,
+  modal
 })
 
 function createStore() {

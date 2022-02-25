@@ -1,13 +1,23 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Notification from '../modal/notification'
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import Spinner from '../common/spinner'
 import TextInput from '../formElements/textInput'
 import ColorPicker from '../formElements/colorPicker'
+import { getCurrentUser, resetErrors } from '../../store/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addNewJotter, updateJotter } from '../../store/jotterSlice'
 
-const JotterSettings = ({header, settingsData, onSubmit, onHideModal}) => {
+const initialJotter = {
+  title: 'New Jotter',
+  color: '#CCC'
+}
+
+const JotterSettings = ({hideModal, jotter}) => {
   const {t} = useTranslation()
-  const [data, setData] = useState(settingsData)
+  const dispatch = useDispatch()
+  const [data, setData] = useState(jotter ?? initialJotter)
+  const currentUser = useSelector(getCurrentUser())
 
   const handleChange = (field) => {
     setData(prev => ({
@@ -18,16 +28,25 @@ const JotterSettings = ({header, settingsData, onSubmit, onHideModal}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    onSubmit(data)
-    onHideModal()
+    if (data._id) {
+      dispatch(updateJotter(data))
+    } else {
+      dispatch(addNewJotter({...data, userId: currentUser._id}))
+    }
+    hideModal()
+  }
+
+  const handleCancel = () => {
+    dispatch(resetErrors())
+    hideModal()
   }
 
   return (
-    <Notification onRemoveModal={onHideModal}>
+    <Notification onRemoveModal={handleCancel}>
       <form onSubmit={handleSubmit}
             className="form">
 
-        <h1 className="form__title">{header}</h1>
+        <h1 className="form__title">{t('JOTTER')}</h1>
 
         {data
           ? <>
@@ -49,7 +68,7 @@ const JotterSettings = ({header, settingsData, onSubmit, onHideModal}) => {
         <div className="btn-block">
           <button type="button"
                   className="btn btn--primary w-33"
-                  onClick={onHideModal}>
+                  onClick={handleCancel}>
             {t('CANCEL')}
           </button>
 

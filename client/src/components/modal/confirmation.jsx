@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 import Notification from './notification'
 
-const Confirmation = ({header, context, action, onConfirm, onCancel}) => {
+const Confirmation = ({hideModal, header, context, action, onConfirm}) => {
   const {t} = useTranslation()
 
   return (
-    <Notification onRemoveModal={onCancel}>
+    <Notification onRemoveModal={hideModal}>
       <div className="card-body">
 
         <h1 className="form__title">
@@ -21,7 +21,7 @@ const Confirmation = ({header, context, action, onConfirm, onCancel}) => {
         <div className="btn-block">
           <button type="button"
                   className="btn btn--primary w-33"
-                  onClick={onCancel}>
+                  onClick={hideModal}>
             {t('CANCEL')}
           </button>
 

@@ -4,8 +4,7 @@ import logo from '../../../assets/images/notebook.svg'
 
 import LanguageBtn from './languageBtn'
 import { Link } from 'react-router-dom'
-import LoginBtn from './login/loginBtn'
-import LoginProvider from '../../../hooks/useLogin'
+import LoginBtn from './loginBtn'
 
 const Header = ({title, navSidebar}) => {
   const {t} = useTranslation()
@@ -37,9 +36,7 @@ const Header = ({title, navSidebar}) => {
           {title || t('JOTTERS')}
         </h1>
 
-        <LoginProvider>
-          <LoginBtn/>
-        </LoginProvider>
+        <LoginBtn/>
 
         <LanguageBtn/>
       </header>

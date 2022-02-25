@@ -5,7 +5,7 @@ import InfoSidebar from '../pages/sidebar/infoSidebar'
 import Layout from './common/layout'
 import Note from '../pages/main/common/note'
 import { useTranslation } from 'react-i18next'
-import { loadInfoNote, updateInfoNote, getInfoNote, getInfoNotesLoadingStatus } from '../../store/infoSlice'
+import { loadInfoNote, getInfoNote, getInfoNotesLoadingStatus } from '../../store/infoSlice'
 import Spinner from '../common/spinner'
 import { getCurrentUser } from '../../store/authSlice'
 
@@ -21,10 +21,6 @@ const InfoLayout = () => {
     dispatch(loadInfoNote(i18n.language))
   }, [i18n.language])
 
-  const handleUpdateInfo = (infoNote) => {
-    dispatch(updateInfoNote(infoNote))
-  }
-
   return (
     <Layout>
       <InfoSidebar/>
@@ -33,7 +29,6 @@ const InfoLayout = () => {
         ? <Spinner/>
 
         : <Note note={infoNote}
-                onUpdate={handleUpdateInfo}
                 type="INFO"
                 isAdmin={isAdmin}/>
       }

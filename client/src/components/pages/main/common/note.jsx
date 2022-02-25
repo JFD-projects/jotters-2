@@ -3,10 +3,14 @@ import { useTranslation } from 'react-i18next'
 
 import Spinner from '../../../common/spinner'
 import QuillCard from '../../../quill/quillCard'
-// import DropdownBtn from '../../common/form/dropdownBtn'
+import { useDispatch } from 'react-redux'
+import { updateNote } from '../../../../store/noteSlice'
+import { FORM_DELETE_NOTE, FORM_NOTE_SETTINGS } from '../../../../utils/helpers'
+import { updateInfoNote } from '../../../../store/infoSlice'
 
-const Note = ({note, type, onUpdate, paramsDropdownBtn, isAdmin = false}) => {
+const Note = ({note, type, isAdmin = false}) => {
   const {t} = useTranslation()
+  const dispatch = useDispatch()
   const [content, setContent] = useState('')
   const [readOnly, setReadOnly] = useState(true)
   const [beforeEdit, setBeforeEdit] = useState({})
@@ -16,6 +20,34 @@ const Note = ({note, type, onUpdate, paramsDropdownBtn, isAdmin = false}) => {
       setContent(note.content)
     }
   }, [note])
+
+  //================================ PARAMS.DROPDOWN_BTN =======================
+  const paramsDropdownBtn = {
+    img: <svg className="dropdown__icon dropdown__icon--primary">
+      <use xlinkHref="/sprite.svg#icon-circle-down"/>
+    </svg>,
+    title: t('CONTROL'),
+    data: note,
+    items: [
+      {
+        action: FORM_NOTE_SETTINGS,
+        title: t('SETTINGS'),
+        img: <svg className="dropdown-item__icon">
+          <use xlinkHref="/sprite.svg#icon-settings"/>
+        </svg>,
+        disabled: false
+      },
+      {
+        action: FORM_DELETE_NOTE,
+        title: t('DELETE_NOTE'),
+        img: <svg className="dropdown-item__icon">
+          <use xlinkHref="/sprite.svg#icon-bin"/>
+        </svg>,
+        disabled: false
+      }
+    ]
+  }
+  //================================
 
   const handleChange = (content) => {
     setContent(content)
@@ -28,15 +60,15 @@ const Note = ({note, type, onUpdate, paramsDropdownBtn, isAdmin = false}) => {
 
   const handleBtnSave = async () => {
     if (type === 'INFO') {
-      onUpdate({
+      dispatch(updateInfoNote({
         lng: beforeEdit.lng,
         content
-      })
+      }))
     } else if (type === 'PRIVATE' || type === 'PUBLIC') {
-      onUpdate({
+      dispatch(updateNote({
         _id: note._id,
         content
-      })
+      }))
     }
     setReadOnly(true)
   }

@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 
-const {generateUserData} = require('../utils/helper')
 const UserModel = require('../models/UserModel')
 const tokenService = require('../services/tokenService')
 const errorService = require('../services/errorService')
@@ -27,7 +26,6 @@ exports.register = [
       const hashedPassword = await bcrypt.hash(password, 12)
 
       const newUser = await UserModel.create({
-        ...generateUserData(),
         ...req.body,
         password: hashedPassword
       })

@@ -6,15 +6,10 @@ import { useTranslation } from 'react-i18next'
 import Layout from './common/layout'
 import Note from '../pages/main/common/note'
 import JotterNotesSidebar from '../pages/sidebar/jotterNotesSidebar/jotterNotesSidebar'
-import useNoteControlDropdown from '../../hooks/useNoteControlDropdown'
 
 import { loadJotters, getJotterById, getJottersLoadingStatus } from '../../store/jotterSlice'
-import {
-  loadNotes, updateNote, deleteNote, addNewNote,
-  getNotesList, getNotesLoadingStatus, getNoteById
-} from '../../store/noteSlice'
+import { loadNotes, getNotesList, getNotesLoadingStatus, getNoteById } from '../../store/noteSlice'
 import Spinner from '../common/spinner'
-
 
 const NotesLayout = () => {
   const {t} = useTranslation()
@@ -27,14 +22,10 @@ const NotesLayout = () => {
   const jotter = useSelector(getJotterById(jotterId))
   const selectedNote = useSelector(getNoteById(noteId))
 
-  const {
-    paramsDropdownBtn, hideDeleteConfirm, renderControlDropdown
-  } = useNoteControlDropdown(handleDeleteNote, handleUpdateNote, selectedNote)
-
   const history = useHistory()
 
   useEffect(() => {
-    // On jump from Public note
+    // In case of jump from Public note
     if (!jotter) {
       dispatch(loadJotters())
     }
@@ -44,29 +35,20 @@ const NotesLayout = () => {
     dispatch(loadNotes(jotterId))
   }, [jotterId])
 
-  // On add or delete note. And first render.
+  // In case of add or delete note. And first render.
   useEffect(() => {
     if (notes?.length > 0) {
-      history.push(`/jotters/${jotterId}/${notes[0]._id}`)
+      if (selectedNote) {
+        history.push(`/jotters/${jotterId}/${noteId}`)
+      } else {
+        history.push(`/jotters/${jotterId}/${notes[0]._id}`)
+      }
     }
   }, [notes?.length])
 
-  async function handleUpdateNote(note) {
-    dispatch(updateNote(note))
-  }
-
-  const handleCreateNewNote = async () => {
-    dispatch(addNewNote({jotterId, title: t('MY_NEW_NOTE')}))
-  }
-
-  function handleDeleteNote(note) {
-    dispatch(deleteNote(note._id))
-    hideDeleteConfirm()
-  }
-
   return (<>
     <Layout title={jotter ? jotter.title : '...'}>
-      <JotterNotesSidebar onCreateNewNote={handleCreateNewNote}/>
+      <JotterNotesSidebar jotterId={jotterId}/>
 
       {(jottersIsLoading || notesIsLoading)
         ? <Spinner/>
@@ -78,14 +60,8 @@ const NotesLayout = () => {
           </p>
 
           : <Note note={selectedNote}
-                  type="PRIVATE"
-                  onUpdate={handleUpdateNote}
-                  paramsDropdownBtn={paramsDropdownBtn}/>
-      }
-
+                  type="PRIVATE"/>}
     </Layout>
-
-    {renderControlDropdown}
   </>)
 }
 

@@ -117,6 +117,10 @@
         flex: 0 0 calc((100% - 2 * #{$gutter-horizontal}) / 3);
     }
 
+    &.w-50 {
+        flex: 0 0 calc((100% - #{$gutter-horizontal}) / 2);
+    }
+
     &:disabled,
     &--disabled {
         color:            $color-grey-light !important;

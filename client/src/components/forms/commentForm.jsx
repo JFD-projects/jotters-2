@@ -2,36 +2,31 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
-
-import TextInputLogin from '../formElements/textInputLogin'
 import Spinner from '../common/spinner'
 import Notification from '../modal/notification'
-import { getErrorMessage, getLoadingStatus, login, resetErrors } from '../../store/authSlice'
 import { validateValue } from '../../utils/validator'
+import { addNewComment, getLoadingStatus } from '../../store/commentSlice'
+import { getCurrentUser } from '../../store/authSlice'
+import TextArea from '../formElements/textArea'
 
-const initUser = {
-  email: '',
-  password: ''
+const initComment = {
+  content: ''
 }
 
-const LoginForm = ({hideModal}) => {
+const CommentForm = ({hideModal, note}) => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
-  const [data, setData] = useState(initUser)
-  const serverErrorMessage = useSelector(getErrorMessage())
+  const [data, setData] = useState(initComment)
   const isLoading = useSelector((getLoadingStatus()))
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState({})
   const [isTouched, setIsTouched] = useState({})
   const isValidForm = Object.values(errors).every(i => !Boolean(i))
+  const currentUser = useSelector(getCurrentUser())
 
   const validatorConfig = {
-    email: {
-      isRequired: {message: t('EMAIL_REQUIRED')},
-      isEmail: {message: t('EMAIL_WRONG')}
-    },
-    password: {
-      isRequired: {message: t('PASSWORD_REQUIRED')}
+    content: {
+      isRequired: {message: t('COMMENT_REQUIRED')}
     }
   }
 
@@ -55,8 +50,8 @@ const LoginForm = ({hideModal}) => {
     if (isLoading) {
       return
     }
-    // Close form only if form is submitted and no errors were caught
-    if (isSubmitted && !serverErrorMessage) {
+    // Close form only if form is submitted
+    if (isSubmitted) {
       handleCancel()
     }
     setIsSubmitted(false)
@@ -80,50 +75,35 @@ const LoginForm = ({hideModal}) => {
     event.preventDefault()
     if (!isValidForm) return
 
-    dispatch(login(data))
+    dispatch(addNewComment({...data, noteId: note._id}, currentUser))
     setIsSubmitted(true)
   }
 
   const handleCancel = () => {
-    dispatch(resetErrors())
     hideModal()
   }
 
   return (
     <Notification onRemoveModal={handleCancel}>
       <form onSubmit={handleSubmit}
-            className="form">
+            className="form form__comment">
 
         <h1 className="form__title">
-          {t('LOG_IN')}
+          {note.title}
         </h1>
 
         {!isLoading
           ? <>
-            <TextInputLogin name="email"
-                            label={t('EMAIL')}
-                            value={data.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={errors.email}
-                            isTouched={isTouched.email}/>
-
-            <TextInputLogin name="password"
-                            label={t('PASSWORD')}
-                            type="password"
-                            value={data.password}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={errors.password}
-                            isTouched={isTouched.password}/>
+            <TextArea name="content"
+                      label={t('COMMENT')}
+                      value={data.content}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.content}
+                      isTouched={isTouched.content}/>
           </>
 
           : <Spinner/>}
-
-        {serverErrorMessage &&
-        <p className="form__server-error-message">
-          {t(serverErrorMessage.toString())}
-        </p>}
 
         <div className="btn-block">
           <button type="button"
@@ -143,4 +123,4 @@ const LoginForm = ({hideModal}) => {
   )
 }
 
-export default LoginForm
+export default CommentForm

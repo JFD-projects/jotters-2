@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const TextInputLogin = ({name, label, type = 'text', value, onChange, onBlur, error, isTouched}) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -10,12 +10,6 @@ const TextInputLogin = ({name, label, type = 'text', value, onChange, onBlur, er
     setShowPassword(prev => !prev)
   }
 
-  // const handleChange = (event) => {
-  //   setData(prev => ({
-  //     ...prev,
-  //     [name]: event.target.value
-  //   }))
-  // }
   const handleChange = (event) => {
     onChange({name: event.target.name, value: event.target.value})
   }
@@ -23,23 +17,6 @@ const TextInputLogin = ({name, label, type = 'text', value, onChange, onBlur, er
   const handleBlur = (event) => {
     onBlur({name: event.target.name})
   }
-
-  // const handleBlur = () => {
-  //   setIsTouched(prev => ({
-  //     ...prev,
-  //     [name]: true
-  //   }))
-  // }
-
-  // const updateErrors = (name) => {
-  //   // const value = data[name]
-  //   // const config = selectConfig(formType, name)
-  //   const error = validateValue(value, config)
-  //   setErrors(prev => ({
-  //     ...prev,
-  //     [name]: error
-  //   }))
-  // }
 
   return (
     <div className="field has-validation">

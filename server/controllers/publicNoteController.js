@@ -8,7 +8,7 @@ exports.fetch = async (req, res) => {
   try {
     let notes = await NoteModel.find({isPublic: true})
 
-    const notesPromises = notes.map(async note => {
+    const listPromises = notes.map(async note => {
       const jotter = await JotterModel.findById(note.jotterId).select('userId')
       const user = await UserModel.findById(jotter.userId).select('name image')
       return {
@@ -22,9 +22,9 @@ exports.fetch = async (req, res) => {
         userImage: user.image,
       }
     })
-    const publicNotes = await Promise.all(notesPromises)
+    const list = await Promise.all(listPromises)
 
-    res.status(200).send(publicNotes)
+    res.status(200).send(list.length > 0 ? list : null)
 
   } catch (err) {
     errorService.handleError(res, 500, err.message)

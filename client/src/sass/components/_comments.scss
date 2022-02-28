@@ -1,0 +1,42 @@
+.comments {
+    display: flex;
+    flex-direction: column;
+    margin-top: $gutter-vertical;
+}
+
+.comment {
+    border-top: 1px solid $color-primary-lighter;
+    padding: $gutter-vertical;
+
+    &__header {
+        display:     flex;
+        align-items: center;
+        gap:         $gutter-horizontal;
+    }
+
+    &__image {
+        width:         4.5rem;
+        height:        4.5rem;
+        border-radius: 50%;
+    }
+
+    &__name {
+        font-size: $font-size-larger;
+        color: $color-primary;
+    }
+
+    &__date {
+        color: $color-primary-lighter;
+    }
+
+    &__context {
+        font-size: $font-size-larger;
+        margin-top: calc(#{gutter-vertical}/2);
+    resize: none;
+    }
+}
+
+.form__comment .field__input {
+    height: 10rem;
+    resize: none;
+}

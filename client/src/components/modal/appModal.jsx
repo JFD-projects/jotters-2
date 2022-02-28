@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import {
   FORM_LOGIN, FORM_REGISTER, FORM_PROFILE, FORM_LOGOUT,
   FORM_JOTTER_SETTINGS, FORM_DELETE_JOTTER,
-  FORM_NOTE_SETTINGS, FORM_DELETE_NOTE
+  FORM_NOTE_SETTINGS, FORM_DELETE_NOTE,
+  FORM_ADD_COMMENT
 } from '../../utils/helpers'
 import LoginForm from '../forms/loginForm'
 import RegisterForm from '../forms/registerForm'
@@ -17,6 +18,7 @@ import Confirmation from './confirmation'
 import { getPayload, hideModal } from '../../store/modalSlice'
 import { deleteJotter } from '../../store/jotterSlice'
 import { deleteNote } from '../../store/noteSlice'
+import CommentForm from '../forms/commentForm'
 
 const AppModal = () => {
   const {t} = useTranslation()
@@ -70,6 +72,9 @@ const AppModal = () => {
                     context={`${data.title}`}
                     action={t('DELETE')}
                     onConfirm={() => handleDeleteNote(data._id)}/>}
+
+      {currentModal === FORM_ADD_COMMENT &&
+      <CommentForm hideModal={handleHideModal} note={data}/>}
     </>
   )
 }

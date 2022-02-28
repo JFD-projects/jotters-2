@@ -24,6 +24,9 @@ export function validateValue(value, config) {
 }
 
 function validate(validateMethod, data, config) {
+      if (data === undefined) {
+        return null
+      }
   switch (validateMethod) {
     case 'isRequired':
       if (typeof data === 'boolean') {

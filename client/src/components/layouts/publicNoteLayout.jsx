@@ -13,15 +13,17 @@ const PublicNoteLayout = () => {
   const {noteId} = useParams()
   const dispatch = useDispatch()
   const note = useSelector(getPublicNoteById(noteId))
-  const publicNotesIsLoading = useSelector(getLoadingStatus())
+  const isLoading = useSelector(getLoadingStatus())
 
   useEffect(() => {
-    const crumbs = PUBLIC_BREADCRUMBS.concat([{to: '/', label: note.title}])
-    dispatch(updateBreadcrumbs(crumbs))
-  }, [])
+    if (!isLoading) {
+      const crumbs = PUBLIC_BREADCRUMBS.concat([{to: '/', label: note.title}])
+      dispatch(updateBreadcrumbs(crumbs))
+    }
+  }, [isLoading])
 
   return (
-    <Layout title={publicNotesIsLoading ? '...' : note.title}>
+    <Layout title={isLoading ? '...' : note.title}>
       <PublicNoteSidebar note={note}/>
       <Note note={note} type="PUBLIC"/>
     </Layout>

@@ -5,8 +5,10 @@ import Spinner from '../../../common/spinner'
 import QuillCard from '../../../quill/quillCard'
 import { useDispatch } from 'react-redux'
 import { updateNote } from '../../../../store/noteSlice'
-import { FORM_DELETE_NOTE, FORM_NOTE_SETTINGS } from '../../../../utils/helpers'
+import { FORM_ADD_COMMENT, FORM_DELETE_NOTE, FORM_NOTE_SETTINGS } from '../../../../utils/helpers'
 import { updateInfoNote } from '../../../../store/infoSlice'
+import { showModal } from '../../../../store/modalSlice'
+import Comments from '../comments'
 
 const Note = ({note, type, isAdmin = false}) => {
   const {t} = useTranslation()
@@ -78,6 +80,10 @@ const Note = ({note, type, isAdmin = false}) => {
     setReadOnly(true)
   }
 
+  const handleBtnAddComment = () => {
+    dispatch(showModal({currentModal: FORM_ADD_COMMENT, data: note}))
+  }
+
   if (content === undefined) {
     return <Spinner/>
   }
@@ -112,6 +118,19 @@ const Note = ({note, type, isAdmin = false}) => {
           </>
         }
       </div>
+      }
+
+      {type === 'PUBLIC' && note &&
+      <>
+        <div className="btn-block">
+          <button className="btn btn--primary w-50"
+                  onClick={handleBtnAddComment}>
+            {t('ADD_COMMENT')}
+          </button>
+        </div>
+
+        <Comments noteId={note._id}/>
+      </>
       }
     </div>
   )

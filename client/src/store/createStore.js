@@ -6,6 +6,7 @@ import auth from './authSlice'
 import publicNotes from './publicNoteSlice'
 import modal from './modalSlice'
 import breadcrumbs from './breadcrumbsSlice'
+import comments from './commentSlice'
 
 const rootReducer = combineReducers({
   info,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   auth,
   publicNotes,
   modal,
-  breadcrumbs
+  breadcrumbs,
+  comments
 })
 
 function createStore() {

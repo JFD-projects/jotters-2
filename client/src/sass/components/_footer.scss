@@ -1,0 +1,12 @@
+.footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4rem;
+  margin-top: 0.5rem;
+  background-color: $color-grey;
+  color: $color-bg;
+}

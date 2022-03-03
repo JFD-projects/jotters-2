@@ -8,7 +8,7 @@ import { updateNote } from '../../../../store/noteSlice'
 import { FORM_ADD_COMMENT, FORM_DELETE_NOTE, FORM_NOTE_SETTINGS } from '../../../../utils/helpers'
 import { updateInfoNote } from '../../../../store/infoSlice'
 import { showModal } from '../../../../store/modalSlice'
-import Comments from '../comments'
+import Comments from '../comments/comments'
 
 const Note = ({note, type, isAdmin = false}) => {
   const {t} = useTranslation()
@@ -81,7 +81,7 @@ const Note = ({note, type, isAdmin = false}) => {
   }
 
   const handleBtnAddComment = () => {
-    dispatch(showModal({currentModal: FORM_ADD_COMMENT, data: note}))
+    dispatch(showModal({currentModal: FORM_ADD_COMMENT, data: {note}}))
   }
 
   if (content === undefined) {
@@ -129,7 +129,7 @@ const Note = ({note, type, isAdmin = false}) => {
           </button>
         </div>
 
-        <Comments noteId={note._id}/>
+        <Comments note={note}/>
       </>
       }
     </div>

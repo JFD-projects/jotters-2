@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import Spinner from '../common/spinner'
 import Notification from '../modal/notification'
 import { validateValue } from '../../utils/validator'
-import { addNewComment, getLoadingStatus } from '../../store/commentSlice'
+import {addNewComment, getLoadingStatus, updateComment} from '../../store/commentSlice'
 import { getCurrentUser } from '../../store/authSlice'
 import TextArea from '../formElements/textArea'
 
@@ -13,10 +13,10 @@ const initComment = {
   content: ''
 }
 
-const CommentForm = ({hideModal, note}) => {
+const CommentForm = ({hideModal, note, comment}) => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
-  const [data, setData] = useState(initComment)
+  const [data, setData] = useState(comment ?? initComment)
   const isLoading = useSelector((getLoadingStatus()))
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState({})
@@ -75,7 +75,17 @@ const CommentForm = ({hideModal, note}) => {
     event.preventDefault()
     if (!isValidForm) return
 
-    dispatch(addNewComment({...data, noteId: note._id}, currentUser))
+    if (comment) {
+      dispatch(updateComment({
+        _id: comment._id,
+        content: data.content
+      }, currentUser))
+    } else {
+      dispatch(addNewComment({
+        content: data.content,
+        noteId: note._id
+      }, currentUser))
+    }
     setIsSubmitted(true)
   }
 

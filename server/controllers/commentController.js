@@ -14,12 +14,13 @@ exports.fetch = async (req, res) => {
     const comments = await CommentModel.find({noteId})
 
     const listPromises = comments.map(async c => {
-      const user = await UserModel.findById(c.userId).select('name image')
+      const user = await UserModel.findById(c.userId).select('_id name image')
       return {
         _id: c._id,
         content: c.content,
         createdAt: c.createdAt,
         updatedAt: c.updatedAt,
+        userId: user._id,
         userName: user.name,
         userImage: user.image
       }
@@ -47,9 +48,38 @@ exports.post = async (req, res) => {
   }
 }
 
+exports.patch = async (req, res) => {
+  try {
+    const {commentId} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
+      return errorService.handleError(res, 400, 'INVALID_ID')
+    }
+
+    const comment = await CommentModel.findById(commentId)
+
+    if (comment.userId.toString() !== req.user._id) {
+      return errorService.handleError(res, 401, 'UNAUTHORIZED')
+    }
+
+    await comment.update(req.body, {new: true})
+    const updatedComment = await CommentModel.findById(commentId)
+
+    res.status(200).send(updatedComment)
+
+  } catch (err) {
+    errorService.handleError(res, 500, 'SERVER_ERROR')
+  }
+}
+
 exports.delete = async (req, res) => {
   try {
     const {commentId} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(commentId)) {
+      return errorService.handleError(res, 400, 'INVALID_ID')
+    }
+
     const deletedComment = await CommentModel.findById(commentId)
 
     if (deletedComment.userId.toString() !== req.user._id) {

@@ -33,6 +33,13 @@
         color:       $color-primary;
     }
 
+    &__content {
+        font-size:      $font-size-larger;
+        font-weight:    500;
+        margin:         $gutter-vertical 0;
+        pointer-events: none;
+    }
+
     &__user-image {
         display: flex;
         justify-content: space-around;

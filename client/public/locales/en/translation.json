@@ -62,6 +62,8 @@
   "COMMENT_REQUIRED": "Comment is required",
   "COMMENT": "Comment",
   "ADD_COMMENT": "Add a comment",
+  "EDIT_COMMENT": "Edit comment",
+  "DELETE_COMMENT": "Delete comment",
   "SUBMIT": "Submit",
   "CLICK_TO_CHANGE": "Click on the image to generate a new one",
   "HOME": "Home"

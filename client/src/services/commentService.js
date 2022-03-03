@@ -9,12 +9,15 @@ const commentService = {
   },
 
   add: async (body) => {
-    return await httpService.post(commentEndpoint,
-      body)
+    return await httpService.post(commentEndpoint, body)
   },
 
-  delete: async (noteId) => {
-    await httpService.delete(commentEndpoint + noteId)
+  update: async (commentId, body) => {
+    return await httpService.patch(commentEndpoint + commentId, body)
+  },
+
+  delete: async (commentId) => {
+    await httpService.delete(commentEndpoint + commentId)
   }
 }
 

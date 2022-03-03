@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Header from '../../pages/header/header'
 import Breadcrumbs from '../../pages/breadcrumbs/breadcrumbs'
+import Footer from "../../pages/footer/footer"
 
 // Breakpoint 900px for phones and tablets portrait ($bp-small)
 const BP_SMALL = 900
@@ -35,13 +36,15 @@ const Layout = ({children, ...rest}) => {
       <Breadcrumbs/>
 
       {showSidebar &&
-      <aside className="sidebar">
-        {clonedSidebar}
-      </aside>}
+        <aside className="sidebar">
+          {clonedSidebar}
+        </aside>}
 
       <section className="main">
         {clonedPage}
       </section>
+
+      <Footer/>
     </div>
   )
 }

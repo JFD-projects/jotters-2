@@ -42,7 +42,6 @@ exports.patch = async (req, res) => {
     }
 
     await jotter.update(req.body, {new: true})
-
     const updatedJotter = await JotterModel.findById(jotterId)
 
     res.status(200).send(updatedJotter)
@@ -67,7 +66,6 @@ exports.delete = async (req, res) => {
     }
 
     await deletedJotter.deleteOne()
-
     res.status(204).send(null)
 
   } catch (err) {

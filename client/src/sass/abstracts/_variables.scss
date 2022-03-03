@@ -9,14 +9,15 @@ $color-black:              #000;
 $color-bg:                 seashell;
 $color-base:               #222;
 $color-error:              #F04124;
-$color-grey:               #777;
+//$color-grey:               #777;
+$color-grey:               hsl(195, 20%, 36%);
 $color-grey-light:         #CCC;
 
 $color-primary:            hsl(195, 100%, 36%);
 //$color-primary:            #008ab8;
-$color-primary-darker:     darken($color-primary, 12);
-$color-primary-dark:       darken($color-primary-darker, 12);
-$color-primary-darkest:    darken($color-primary-dark, 12);
+$color-primary-darker:     darken($color-primary, 6);
+$color-primary-dark:       darken($color-primary-darker, 6);
+$color-primary-darkest:    darken($color-primary-dark, 6);
 $color-primary-lighter:    lighten($color-primary, 12);
 $color-primary-light:      lighten($color-primary-lighter, 12);
 

@@ -8,7 +8,7 @@ import Note from '../pages/main/common/note'
 import JotterNotesSidebar from '../pages/sidebar/jotterNotesSidebar/jotterNotesSidebar'
 
 import { loadJotters, getJotterById, getJottersLoadingStatus } from '../../store/jotterSlice'
-import { loadNotes, getNotesList, getNotesLoadingStatus, getNoteById } from '../../store/noteSlice'
+import {loadNotes, getNotesList, getNotesLoadingStatus, getNoteById, clearNotes} from '../../store/noteSlice'
 import Spinner from '../common/spinner'
 import { PRIVATE_BREADCRUMBS } from '../../utils/helpers'
 import { updateBreadcrumbs } from '../../store/breadcrumbsSlice'
@@ -31,9 +31,18 @@ const NotesLayout = () => {
     if (!jotter) {
       dispatch(loadJotters())
     }
-    const crumbs = PRIVATE_BREADCRUMBS.concat([{to: '/', label: jotter.title}])
-    dispatch(updateBreadcrumbs(crumbs))
+
+    return () => {
+      dispatch(clearNotes())
+    }
   }, [])
+
+  useEffect(() => {
+    if (jotter){
+      const crumbs = PRIVATE_BREADCRUMBS.concat([{to: '/', label: jotter.title}])
+      dispatch(updateBreadcrumbs(crumbs))
+    }
+  }, [jotter])
 
   useEffect(() => {
     dispatch(loadNotes(jotterId))

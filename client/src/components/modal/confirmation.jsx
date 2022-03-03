@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import Notification from './notification'
 
-const Confirmation = ({hideModal, header, context, action, onConfirm}) => {
+const Confirmation = ({hideModal, header, content, action, onConfirm}) => {
   const {t} = useTranslation()
 
   return (
@@ -14,9 +14,9 @@ const Confirmation = ({hideModal, header, context, action, onConfirm}) => {
           {header}
         </h1>
 
-        <h2 className="form__title">
-          {context}
-        </h2>
+        <p className="form__content">
+          {content}
+        </p>
 
         <div className="btn-block">
           <button type="button"

@@ -36,11 +36,15 @@ const slice = createSlice({
     deleted(state, action) {
       state.entities = state.entities.filter(i => i._id !== action.payload)
       state.isLoading = false
+    },
+    clear(state) {
+      state.entities = null
+      state.isLoading = false
     }
   }
 })
 
-const {requested, received, requestFailed, added, updated, deleted} = slice.actions
+const {requested, received, requestFailed, added, updated, deleted, clear} = slice.actions
 
 export const loadNotes = (jotterId) => async (dispatch) => {
   dispatch(requested())
@@ -85,6 +89,10 @@ export const deleteNote = (noteId) => async (dispatch) => {
     errorService.handleError(err)
     dispatch(requestFailed())
   }
+}
+
+export const clearNotes = () => async (dispatch) => {
+  dispatch(clear())
 }
 
 export const getNoteById = (noteId) => (state) => {

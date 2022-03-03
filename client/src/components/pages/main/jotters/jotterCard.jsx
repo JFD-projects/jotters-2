@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { dateToString } from '../../../../utils/dateToString'
+import {dateToString, dateToStringForRender} from '../../../../utils/dateToString'
 import { useTranslation } from 'react-i18next'
 import DropdownBtn from '../../../formElements/dropdownBtn'
 import { FORM_DELETE_JOTTER, FORM_JOTTER_SETTINGS } from '../../../../utils/helpers'
@@ -49,7 +49,7 @@ const JotterCard = ({jotter}) => {
         </p>
 
         <p className="card--jotter__date">
-          {`${t('CHANGED')}: ${dateToString(jotter.updatedAt)}`}
+          {`${t('CHANGED')}: ${dateToStringForRender(jotter.updatedAt, Date.now())}`}
         </p>
       </Link>
 

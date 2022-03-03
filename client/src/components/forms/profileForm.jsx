@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useTranslation} from 'react-i18next'
 
 import TextInputLogin from '../formElements/textInputLogin.jsx'
 import Spinner from '../common/spinner'
@@ -12,8 +12,8 @@ import {
   resetErrors,
   updateCurrentUser
 } from '../../store/authSlice'
-import { generateUserData } from '../../utils/helpers'
-import { validateValue } from '../../utils/validator'
+import {generateUserData} from '../../utils/helpers'
+import {validateValue} from '../../utils/validator'
 
 const initUser = {
   name: '',
@@ -128,13 +128,15 @@ const ProfileForm = ({hideModal}) => {
         {!isLoading
           ? <>
             <figure className="form__user-image">
-              {imageIsLoading
-              && <Spinner/>}
+              <div className="card-container">
+                {imageIsLoading
+                  && <Spinner/>}
 
-              <img src={data.image}
-                   alt="Authenticated user"
-                   onClick={randomChangeImage}
-                   onLoad={imageLoaded}/>
+                <img src={data.image}
+                     alt="Authenticated user"
+                     onClick={randomChangeImage}
+                     onLoad={imageLoaded}/>
+              </div>
 
               <figcaption>{t('CLICK_TO_CHANGE')}</figcaption>
             </figure>
@@ -151,9 +153,9 @@ const ProfileForm = ({hideModal}) => {
           : <Spinner/>}
 
         {serverErrorMessage &&
-        <p className="form__server-error-message">
-          {t(serverErrorMessage.toString())}
-        </p>}
+          <p className="form__server-error-message">
+            {t(serverErrorMessage.toString())}
+          </p>}
 
         <div className="btn-block">
           <button type="button"

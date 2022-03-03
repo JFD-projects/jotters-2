@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 import commentService from '../services/commentService'
 import errorService from '../services/errorService'
-import { sortArrayBy } from '../utils/helpers'
 
 const initialState = {
   entities: null,
@@ -26,6 +25,12 @@ const slice = createSlice({
       state.entities = state.entities ? [...state.entities, action.payload] : [action.payload]
       state.isLoading = false
     },
+    updated(state, action) {
+      state.entities = state.entities.map(i => i._id === action.payload._id
+        ? {...i, ...action.payload}
+        : i)
+      state.isLoading = false
+    },
     deleted(state, action) {
       state.entities = state.entities.filter(i => i._id !== action.payload)
       state.isLoading = false
@@ -33,7 +38,7 @@ const slice = createSlice({
   }
 })
 
-const {requested, received, requestFailed, added, deleted} = slice.actions
+const {requested, received, requestFailed, added, updated, deleted} = slice.actions
 
 export const loadComments = (noteId) => async (dispatch) => {
   dispatch(requested())
@@ -64,6 +69,24 @@ export const addNewComment = (comment, currentUser) => async (dispatch) => {
   }
 }
 
+export const updateComment = (comment, currentUser) => async (dispatch) => {
+  dispatch(requested())
+  try {
+    const {data} = await commentService.update(comment._id, comment)
+
+    const payload = {
+      ...data,
+      userName: currentUser.name,
+      userImage: currentUser.image
+    }
+
+    dispatch(updated(payload))
+  } catch (err) {
+    errorService.handleError(err)
+    dispatch(requestFailed())
+  }
+}
+
 export const deleteComment = (commentId) => async (dispatch) => {
   dispatch(requested())
   try {
@@ -80,7 +103,10 @@ export const getCommentById = (commentId) => (state) => {
 }
 
 export const getCommentsList = () => (state) => {
-  return sortArrayBy('byDate', state.comments.entities)
+  if (state.comments.entities === null) {
+    return null
+  }
+  return [...state.comments.entities].sort((a, b) => (new Date(b.createdAt) - new Date(a.createdAt)))
 }
 
 export const getLoadingStatus = () => (state) => {

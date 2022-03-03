@@ -54,6 +54,8 @@ export const FORM_DELETE_JOTTER = 'deleteJotter'
 export const FORM_NOTE_SETTINGS = 'noteSettings'
 export const FORM_DELETE_NOTE = 'deleteNote'
 export const FORM_ADD_COMMENT = 'addComment'
+export const FORM_EDIT_COMMENT = 'editComment'
+export const FORM_DELETE_COMMENT = 'deleteComment'
 
 export const INFO_BREADCRUMBS = [{to: '/', label: 'HOME'}]
 export const PUBLIC_BREADCRUMBS = [{to: '/', label: 'HOME'}, {to: '/public', label: 'PUBLIC_NOTES'}]

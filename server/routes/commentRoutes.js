@@ -6,8 +6,12 @@ const router = express.Router({mergeParams: true})
 
 router.get('/', commentController.fetch)
 
-router.route('/').post(auth, commentController.post)
+router.route('/')
+    .get(commentController.fetch)
+    .post(auth, commentController.post)
 
-router.delete('/:commentId', auth, commentController.delete)
+router.route('/:commentId')
+    .patch(auth, commentController.patch)
+    .delete(auth, commentController.delete)
 
 module.exports = router

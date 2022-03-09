@@ -1,0 +1,29 @@
+.card {
+    display:          flex;
+    align-items:      center;
+    flex-direction:   column;
+    justify-content:  center;
+    padding:          3rem 1rem;
+    text-decoration:  none;
+    color:            $color-primary;
+    border-radius:    $border-radius;
+    background-color: $color-secondary-lightest;
+    transition:       all $transition-delay ease-out;
+    gap:              $gutter-vertical;
+
+    &:hover,
+    &:active {
+        box-shadow: 0 0 1rem 0.125rem rgba(0, 0, 0, 0.14);
+        filter:     brightness(102%);
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////
+
+.no-card {
+    font-size:  $font-size-large;
+    width:      100%;
+    margin:     $gutter-vertical $gutter-horizontal;
+    text-align: center;
+    color:      $color-primary;
+}

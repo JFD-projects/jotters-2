@@ -1,0 +1,140 @@
+.btn {
+    &,
+    &:link,
+    &:visited {
+        display:          flex;
+        font-size:        inherit;
+        font-weight:      500;
+        line-height:      1.5;
+        align-items:      center;
+        justify-content:  center;
+        padding:          1.5rem 2.5rem;
+        cursor:           pointer;
+        user-select:      none;
+        text-align:       center;
+        vertical-align:   middle;
+        text-decoration:  none;
+        border:           1px solid transparent;
+        border-radius:    $border-radius;
+        color:            currentColor;
+        background-color: transparent;
+        transition:       all $transition-delay ease-in-out;
+    }
+
+    &:hover {
+        box-shadow: 0 1rem 2rem rgba($color-black, .2);
+        transform:  translateY(-3px);
+    }
+
+    //&:focus,
+    &:active {
+        box-shadow: 0 .5rem 1rem rgba($color-black, .2);
+        transform:  translateY(-1px);
+    }
+
+    &--primary {
+        &,
+        &:link,
+        &:visited {
+            width:        100%;
+            @include text-truncate;
+            color:        $color-primary;
+            border-color: $color-primary;
+
+            &:hover {
+                color:            $color-white;
+                background-color: $color-primary;
+            }
+        }
+        // --------------------- Icon animation when hovering over Btn--Primary --------------
+        & > svg {
+            width:       2rem;
+            height:      2rem;
+            fill:        currentColor;
+            flex:        0 0 4rem;
+            text-align:  right;
+            margin-left: -2rem;
+            transition:  padding $transition-delay-long ease-in-out;
+        }
+        &:hover > svg {
+            padding-right: calc(4rem - #{$font-size-large});
+        }
+    }
+
+    &--secondary {
+        &,
+        &:link,
+        &:visited {
+            @include text-truncate;
+            width:        100%;
+            color:        $color-secondary;
+            border-color: $color-secondary;
+
+            &:hover {
+                color:            $color-white;
+                background-color: $color-secondary;
+            }
+        }
+    }
+
+    &--menu {
+        &,
+        &:link,
+        &:visited {
+            display: none;
+            padding: 0;
+            & > img {
+                height: 4.5rem;
+            }
+            @include respond(small) {
+                display: flex;
+            }
+        }
+        // --------------------- Icon for HEADER Menu --------------
+        & > svg {
+            width:  4.5rem;
+            height: 4.5rem;
+            fill:   currentColor;
+        }
+    }
+
+    &--logo {
+        &,
+        &:link,
+        &:visited {
+            //display: block;
+            padding: 0;
+            & > img {
+                height: 4.5rem;
+            }
+            @include respond(small) {
+                display: none;
+            }
+        }
+    }
+
+    &.w-33 {
+        flex: 0 0 calc((100% - 2 * 2rem) / 3);
+    }
+
+    &.w-50 {
+        flex: 0 0 calc((100% - 2rem) / 2);
+    }
+
+    &:disabled,
+    &--disabled {
+        color:            $color-grey-light !important;
+        background-color: $color-grey !important;
+        border-color:     transparent !important;
+        box-shadow:       none !important;
+        cursor:           not-allowed !important;
+        transform:        none !important;
+    }
+}
+
+.btn-block {
+    display:         flex;
+    justify-content: flex-end;
+    gap:             $gutter-horizontal;
+    margin-top:      $gutter-vertical;
+}

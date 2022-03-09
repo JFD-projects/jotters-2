@@ -1,0 +1,36 @@
+.crumbs {
+    display:     flex;
+    align-items: center;
+    gap:         1rem;
+    margin-left: $gutter-horizontal;
+    color:       $color-primary;
+    font-weight: 500;
+
+    &__item {
+        text-decoration: none;
+        color:           currentColor;
+        font-weight:     bold;
+
+        &:hover,
+        &:active {
+            color:           $color-secondary;
+            text-decoration: underline;
+        }
+    }
+
+    &__last {
+        color:  $color-primary-dark;
+        cursor: default;
+    }
+
+    &__icon {
+        display: flex;
+        & > svg {
+            width:       2rem;
+            height:      2rem;
+            margin-left: -1rem;
+            fill:        currentColor;
+            transform:   rotate(180deg);
+        }
+    }
+}

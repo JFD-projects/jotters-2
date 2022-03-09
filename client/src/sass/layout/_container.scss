@@ -1,0 +1,54 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: $bp-large-container;
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  grid-template-areas:   "head head"
+                         "crum crum"
+                         "side main"
+                         "foot foot";
+  grid-gap: 1rem $gutter-horizontal;
+
+  @include respond(big) {
+    max-width: $bp-big-container;
+  }
+
+  @include respond(medium) {
+    max-width: $bp-medium-container;
+    grid-template-columns: 33.333% 1fr;
+  }
+
+  @include respond(small) {
+    max-width: $bp-small-container;
+    grid-template-columns: 1fr;
+    grid-template-areas:   "head"
+                           "crum"
+                           "main"
+                           "foot";
+  }
+
+  @include respond(tiny) {
+    max-width: $bp-tiny-container;
+  }
+}
+
+.header {
+  grid-area: head;
+}
+
+.crumbs {
+  grid-area: crum;
+}
+
+.sidebar {
+  grid-area: side;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: foot;
+}

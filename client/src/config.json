@@ -1,0 +1,6 @@
+{
+  "apiEndpoint": "http://localhost:8081/api/v2/",
+  "productionApiEndpoint": "https://jotters.herokuapp.com/api/v2/",
+  "loggerDNS": "https://6fefb84462d54f14b3e968b3422cdb01@o1061821.ingest.sentry.io/6181398",
+  "tokenExpiresIn": 3600
+}

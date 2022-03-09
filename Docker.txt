@@ -1,0 +1,16 @@
+docker build -t jotters .
+docker image ls
+docker run -d -p 8080:8080 --name jotters --rm jotters
+docker ps -a
+docker stop jotters
+
+
+
+
+=====================================
+NB
+client/src/config.json
+
+"productionApiEndpoint": "https://jotters.herokuapp.com/api/v2/"
+change to
+"productionApiEndpoint": "http://localhost:8080/api/v2/"

@@ -1,0 +1,71 @@
+//================ backdrop ================
+.backdrop {
+    position:         fixed;
+    top:              0;
+    left:             0;
+    width:            100vw;
+    height:           100vh;
+    opacity:          0;
+    background-color: #000;
+    z-index:          10;
+    animation:        backdrop-appear $transition-delay ease-in-out forwards;
+}
+
+@keyframes backdrop-appear {
+    from {opacity: 0;}
+    to {opacity: 0.5;}
+}
+
+//================ mobile-sidebar ================
+.mobile-sidebar {
+    display:        flex;
+    align-items:    center;
+    flex-direction: column;
+    //margin:         3rem 0;
+    gap:            3rem;
+
+    //&.mobile {
+        position:         fixed;
+        top:              0;
+        left:             0;
+        width:            80%;
+        max-width:        300px;
+        height:           100vh;
+        //margin-top:       0;
+        //margin-left:      -100vw;
+        padding:          6rem 3rem;
+        background-color: $color-bg;
+        z-index:          12;
+        transition:       margin $transition-delay-long ease-in-out;
+        animation:        slide-right $transition-delay-long ease-in-out forwards;
+    //}
+}
+
+@keyframes slide-right {
+    from {margin-left: -100vw;}
+    to {margin-left: 0;}
+}
+
+//================ modal-notification ================
+.modal-notification {
+    position:         fixed;
+    top:              50%;
+    left:             50%;
+    width:            calc(#{$bp-large-container} * 0.5);
+    padding:          3rem 6rem;
+    border:           1px solid $color-grey;
+    border-radius:    $border-radius;
+    background-color: $color-bg;
+    z-index:          12;
+    animation:        slide-down $transition-delay-long ease-out forwards;
+
+    @include respond(big) {width: calc(#{$bp-big-container} * 0.55);}
+    @include respond(medium) {width: calc(#{$bp-medium-container} * 0.7);}
+    @include respond(small) {width: calc(#{$bp-small-container} * 0.8);}
+    @include respond(tiny) {width: calc(#{$bp-tiny-container} * 0.9);}
+}
+
+@keyframes slide-down {
+    from {opacity: 0; transform: translate(-50%, calc(-50% - 3rem));}
+    to {opacity: 1; transform: translate(-50%, -50%);}
+}

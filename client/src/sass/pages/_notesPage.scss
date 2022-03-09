@@ -1,0 +1,39 @@
+//------------------- Together with .card-container and .card ------------------
+
+.note-card {
+    position: relative;
+
+    &__title {
+        font-size:     $font-size-larger;
+        overflow:      hidden;
+        max-height:    5.25rem;
+        text-align:    center;
+        text-overflow: ellipsis;
+        word-wrap:     break-word;
+    }
+
+    &__text {
+        font-size:     $font-size-smallest;
+        line-height:   1.4rem;
+        overflow:      hidden;
+        max-height:    4.3rem;
+        text-align:    start;
+        text-overflow: ellipsis;
+        word-wrap:     break-word;
+    }
+
+    &__name {
+        @include text-truncate;
+        font-size:   $font-size-larger;
+        font-weight: 500;
+        color:       $color-secondary;
+    }
+
+    &__date {
+        font-size: $font-size-small;
+    }
+}
+
+.note-card.own-note {
+    border: $border-secondary;
+}

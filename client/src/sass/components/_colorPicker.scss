@@ -1,0 +1,30 @@
+.field__color-picker {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+
+  & > .field__label {
+    top: -4rem;
+  }
+}
+
+.field__color-circle {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  cursor: pointer;
+  border: .75rem solid;
+  transition: all $transition-delay ease-in-out;
+
+  &:hover {
+    transform: scale(1.25);
+  }
+
+  &.selected {
+    cursor: auto;
+    transform: scale(1.25);
+    z-index: 2;
+  }
+}
+
